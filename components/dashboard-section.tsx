@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Send, Mic, Bot, User, CheckCircle2, Clock, HelpCircle, Gauge, ArrowRight } from "lucide-react"
@@ -51,6 +51,16 @@ export function DashboardSection() {
   const [inputValue, setInputValue] = useState("")
   const [messages, setMessages] = useState(initialChatMessages)
   const [isLoading, setIsLoading] = useState(false)
+  const [profile, setProfile] = useState<any>(null)
+
+  useEffect(() => {
+    const saved = localStorage.getItem("examwise_profile")
+    if (saved) {
+      try {
+        setProfile(JSON.parse(saved))
+      } catch(e) {}
+    }
+  }, [])
 
   const handleSend = async (message: string) => {
     if (!message.trim() || isLoading) return;
@@ -64,7 +74,7 @@ export function DashboardSection() {
       const res = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: message }),
+        body: JSON.stringify({ prompt: message, profileContext: profile }),
       });
       const data = await res.json();
 

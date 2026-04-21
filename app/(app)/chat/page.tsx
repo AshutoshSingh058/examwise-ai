@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { Navbar } from "@/components/navbar"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { Bot, Mic, Send, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -15,9 +15,20 @@ const initialChatMessages = [
 ]
 
 export default function ChatPage() {
+  const router = useRouter()
   const [inputValue, setInputValue] = useState("")
   const [messages, setMessages] = useState(initialChatMessages)
   const [isLoading, setIsLoading] = useState(false)
+  const [profile, setProfile] = useState<any>(null)
+
+  useEffect(() => {
+    const saved = localStorage.getItem("examwise_profile")
+    if (!saved) {
+      router.push("/setup")
+    } else {
+      setProfile(JSON.parse(saved))
+    }
+  }, [router])
 
   const handleSend = async (message: string) => {
     if (!message.trim() || isLoading) return;
@@ -31,7 +42,7 @@ export default function ChatPage() {
       const res = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: message }),
+        body: JSON.stringify({ prompt: message, profileContext: profile }),
       });
       const data = await res.json();
 
@@ -48,9 +59,8 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <Navbar />
-      <main className="flex-1 flex flex-col items-center p-4 pt-24 md:p-8 md:pt-28 max-w-5xl mx-auto w-full">
+    <div className="flex flex-col bg-background h-full h-[calc(100vh-4rem)] lg:h-screen w-full">
+      <main className="flex-1 flex flex-col items-center p-4 md:p-8 max-w-5xl mx-auto w-full h-full pb-4">
         <div className="mb-8 w-full text-center">
           <h1 className="text-3xl font-bold tracking-tight">AI Study Assistant</h1>
           <p className="mt-2 text-muted-foreground">

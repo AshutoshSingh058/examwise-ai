@@ -12,9 +12,7 @@ export default function Home() {
       <Navbar />
       <main>
         <HeroSection />
-        <QuickActions />
         <HowItWorks />
-        <DashboardSection />
         <FeaturesSection />
       </main>
       <Footer />
