@@ -4,7 +4,7 @@ import path from "path"
 export interface KBSource {
   id: string
   title: string
-  type: "text" | "pdf" | "youtube"
+  type: "text" | "pdf" | "youtube" | "document"
   subject: string
   addedAt: string
   status: "processed" | "pending" | "failed"
