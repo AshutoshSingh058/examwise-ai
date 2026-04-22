@@ -1,0 +1,15 @@
+{
+  "id": "cde10782-379e-4a67-bac6-eb7461b17cf6",
+  "email": "nikhilmehla@gmail.com",
+  "password": "p0o9I*u707",
+  "isProfileComplete": true,
+  "createdAt": "2026-04-22T13:30:06.247Z",
+  "profile": {
+    "name": "Nikhil Mehla",
+    "college": "AIT Pune",
+    "university": "SPPU",
+    "course": "COMP",
+    "semester": "6",
+    "examDate": "2026-05-26"
+  }
+}

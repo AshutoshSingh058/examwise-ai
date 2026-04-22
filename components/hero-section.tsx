@@ -30,7 +30,7 @@ export function HeroSection() {
         </p>
 
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <Link href="/setup" className="w-full sm:w-auto">
+          <Link href="/signup" className="w-full sm:w-auto">
             <Button size="lg" className="w-full rounded-full px-8">
               Start Preparing
               <ArrowRight className="ml-2 h-4 w-4" />

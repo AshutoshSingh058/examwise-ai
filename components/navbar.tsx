@@ -41,11 +41,12 @@ export function Navbar() {
           </Link>
         </div>
 
-        {/* Desktop CTA */}
         <div className="hidden md:block">
-          <Button size="sm" className="rounded-full px-6">
-            Start Preparing
-          </Button>
+          <Link href="/signup">
+            <Button size="sm" className="rounded-full px-6">
+              Start Preparing
+            </Button>
+          </Link>
         </div>
 
         {/* Mobile menu button */}
@@ -88,9 +89,11 @@ export function Navbar() {
               Dashboard
             </Link>
             <div className="pt-4">
-              <Button size="sm" className="w-full rounded-full">
-                Start Preparing
-              </Button>
+              <Link href="/signup">
+                <Button size="sm" className="w-full rounded-full">
+                  Start Preparing
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

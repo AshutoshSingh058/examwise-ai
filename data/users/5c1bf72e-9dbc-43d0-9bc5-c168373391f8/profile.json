@@ -1,0 +1,15 @@
+{
+  "id": "5c1bf72e-9dbc-43d0-9bc5-c168373391f8",
+  "email": "featurequickashu@gmail.com",
+  "password": "p0o9I*u707",
+  "isProfileComplete": true,
+  "createdAt": "2026-04-22T12:57:16.606Z",
+  "profile": {
+    "name": "Ashutosh",
+    "college": "AIT Pune",
+    "university": "SPPU",
+    "course": "Computer Engineering",
+    "semester": "6th sem",
+    "examDate": "2026-05-26"
+  }
+}

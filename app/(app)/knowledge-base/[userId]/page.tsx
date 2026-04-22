@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -19,7 +20,10 @@ interface Source {
   content?: string
 }
 
-export default function KnowledgeBasePage() {
+export default function KnowledgeBasePage({ params: paramsPromise }: { params: Promise<{ userId: string }> }) {
+  const router = useRouter()
+  const params = React.use(paramsPromise)
+  const userId = params.userId
   const [sources, setSources] = useState<Source[]>([])
   const [isTextOpen, setIsTextOpen] = useState(false)
   const [isPdfOpen, setIsPdfOpen] = useState(false)
@@ -33,12 +37,17 @@ export default function KnowledgeBasePage() {
   const [pdfForm, setPdfForm] = useState({ title: "", subject: "", file: null as File | null })
 
   useEffect(() => {
+    const storedUserId = localStorage.getItem("examwise_user_id");
+    if (!storedUserId || storedUserId !== userId) {
+      // Redirect or handle unauthorized
+      return;
+    }
     fetchSources()
-  }, [])
+  }, [userId])
 
   const fetchSources = async () => {
     try {
-      const res = await fetch("/api/kb")
+      const res = await fetch(`/api/kb?userId=${userId}`)
       const data = await res.json()
       setSources(data)
     } catch (e) { }
@@ -46,7 +55,7 @@ export default function KnowledgeBasePage() {
 
   const handleDelete = async (id: string) => {
     try {
-      await fetch(`/api/kb/${id}`, { method: "DELETE" })
+      await fetch(`/api/kb/${id}?userId=${userId}`, { method: "DELETE" })
       fetchSources()
     } catch (e) { }
   }
@@ -63,7 +72,8 @@ export default function KnowledgeBasePage() {
           subject: textForm.subject,
           content: textForm.content,
           type: "text",
-          status: "processed"
+          status: "processed",
+          userId: userId // Tag with userId
         })
       })
       setIsTextOpen(false)
@@ -89,6 +99,7 @@ export default function KnowledgeBasePage() {
       formData.append("file", pdfForm.file)
       formData.append("title", pdfForm.title)
       formData.append("subject", pdfForm.subject)
+      formData.append("userId", userId) // Tag with userId
 
       const res = await fetch("/api/upload-document", {
         method: "POST",

@@ -1,6 +1,7 @@
 "use client"
 
-import { MessageSquarePlus, Search, History, BookOpen, TrendingUp, Settings, UserCircle } from "lucide-react"
+import { useState, useEffect } from "react"
+import { MessageSquarePlus, Search, History, BookOpen, TrendingUp, Settings, UserCircle, Loader2 } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -13,86 +14,127 @@ import {
   SidebarFooter,
 } from "@/components/ui/sidebar"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-
-const topItems = [
-  { title: "New Chat", url: "/chat", icon: MessageSquarePlus },
-  { title: "Search Chats", url: "#", icon: Search },
-]
-
-const recentChats = [
-  { title: "DBMS Unit 3 prep...", url: "/chat" },
-  { title: "OS Algorithms summary", url: "/chat" },
-]
-
-const middleItems = [
-  { title: "Knowledge Base", url: "/knowledge-base", icon: BookOpen },
-  { title: "Hot Topics", url: "/hot-topics", icon: TrendingUp },
-]
-
-const bottomItems = [
-  { title: "Settings", url: "#", icon: Settings },
-  { title: "Profile", url: "#", icon: UserCircle },
-]
+import { usePathname, useRouter } from "next/navigation"
+import { useRef } from "react"
 
 export function AppSidebar() {
   const pathname = usePathname()
+  const router = useRouter()
+  const [userId, setUserId] = useState<string | null>(null)
+  const [chats, setChats] = useState<any[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const hasFetched = useRef(false)
+
+  useEffect(() => {
+    const id = localStorage.getItem("examwise_user_id")
+    setUserId(id)
+    if (id && !hasFetched.current) {
+      fetchChats(id)
+      hasFetched.current = true
+    }
+  }, [])
+
+  const fetchChats = async (id: string) => {
+    try {
+      const res = await fetch(`/api/chat/${id}/list`)
+      const data = await res.json()
+      setChats(data)
+    } catch (e) {
+      console.error("Failed to fetch chats")
+    }
+  }
+
+  const handleNewChat = async () => {
+    if (!userId) return
+    setIsLoading(true)
+    try {
+      const res = await fetch(`/api/chat/${userId}/new`, { method: "POST" })
+      const data = await res.json()
+      router.push(`/chat/${userId}/${data.id}`)
+      fetchChats(userId)
+    } catch (e) {
+      console.error("Failed to create new chat")
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
-    <Sidebar className="border-r border-border/50">
+    <Sidebar collapsible="none" className="border-r border-border/50">
       <SidebarContent>
         {/* TOP */}
         <SidebarGroup className="pt-4">
           <SidebarGroupContent>
             <SidebarMenu>
-              {topItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={pathname === item.url}>
-                    <Link href={item.url}>
-                      <item.icon className="h-4 w-4" />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              <SidebarMenuItem>
+                <SidebarMenuButton 
+                  onClick={handleNewChat} 
+                  disabled={isLoading}
+                  className="w-full justify-start gap-2"
+                >
+                  {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <MessageSquarePlus className="h-4 w-4" />}
+                  <span>New Chat</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton>
+                  <Search className="h-4 w-4" />
+                  <span>Search Chats</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
 
         {/* RECENT CHATS */}
-        <SidebarGroup>
-          <SidebarGroupLabel>Recent Chats</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {recentChats.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <History className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-muted-foreground">{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        {userId && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Recent Chats</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {chats.length === 0 ? (
+                  <div className="px-4 py-2 text-xs text-muted-foreground italic">No chats yet</div>
+                ) : (
+                  chats.map((chat) => (
+                    <SidebarMenuItem key={chat.id}>
+                      <SidebarMenuButton 
+                        asChild 
+                        isActive={pathname === `/chat/${userId}/${chat.id}`}
+                      >
+                        <Link href={`/chat/${userId}/${chat.id}`}>
+                          <History className="h-4 w-4 text-muted-foreground" />
+                          <span className="truncate">{chat.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))
+                )}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
 
-        {/* MIDDLE */}
+        {/* LIBRARY */}
         <SidebarGroup>
           <SidebarGroupLabel>Library</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {middleItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={pathname === item.url}>
-                    <Link href={item.url}>
-                      <item.icon className="h-4 w-4" />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={pathname?.startsWith("/knowledge-base")}>
+                  <Link href={userId ? `/knowledge-base/${userId}` : "/signup"}>
+                    <BookOpen className="h-4 w-4" />
+                    <span>Knowledge Base</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={pathname === "/hot-topics"}>
+                  <Link href="/hot-topics">
+                    <TrendingUp className="h-4 w-4" />
+                    <span>Hot Topics</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -101,16 +143,22 @@ export function AppSidebar() {
       {/* BOTTOM */}
       <SidebarFooter>
         <SidebarMenu>
-          {bottomItems.map((item) => (
-            <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild>
-                <Link href={item.url}>
-                  <item.icon className="h-4 w-4" />
-                  <span>{item.title}</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <Link href="#">
+                <Settings className="h-4 w-4" />
+                <span>Settings</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <Link href="#">
+                <UserCircle className="h-4 w-4" />
+                <span>Profile</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
     </Sidebar>

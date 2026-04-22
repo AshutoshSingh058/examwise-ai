@@ -18,7 +18,16 @@ export function ProfileForm() {
     examDate: ""
   })
 
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
+
   useEffect(() => {
+    const userId = localStorage.getItem("examwise_user_id")
+    if (!userId) {
+      router.push("/signup")
+      return
+    }
+
     const saved = localStorage.getItem("examwise_profile")
     if (saved) {
       try {
@@ -27,17 +36,40 @@ export function ProfileForm() {
         console.error("Could not parse saved profile form")
       }
     }
-  }, [])
+  }, [router])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    localStorage.setItem("examwise_profile", JSON.stringify(formData))
-    router.push("/chat")
+    setIsLoading(true)
+    setError("")
+
+    const userId = localStorage.getItem("examwise_user_id")
+    
+    try {
+      const res = await fetch("/api/auth/profile-update", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, ...formData })
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to update profile")
+      }
+
+      localStorage.setItem("examwise_profile", JSON.stringify(formData))
+      router.push("/chat")
+    } catch (err: any) {
+      setError(err.message)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (

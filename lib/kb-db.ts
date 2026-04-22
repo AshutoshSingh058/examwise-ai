@@ -1,4 +1,5 @@
 import fs from "fs/promises"
+import { existsSync, mkdirSync } from "fs"
 import path from "path"
 
 export interface KBSource {
@@ -9,44 +10,63 @@ export interface KBSource {
   addedAt: string
   status: "processed" | "pending" | "failed"
   content: string
+  userId?: string
 }
 
-const dataDir = path.join(process.cwd(), "data")
-const dbPath = path.join(dataDir, "examwise_memory.json")
+const DATA_DIR = path.join(process.cwd(), "data")
+const USERS_DIR = path.join(DATA_DIR, "users")
 
-async function ensureDb() {
+// --- DB Logic ---
+
+function getUserKBPath(userId: string): string {
+  const userDir = path.join(USERS_DIR, userId);
+  if (!existsSync(userDir)) {
+    mkdirSync(userDir, { recursive: true });
+  }
+  return path.join(userDir, 'kb.json');
+}
+
+export async function getSources(userId?: string): Promise<KBSource[]> {
   try {
-    await fs.mkdir(dataDir, { recursive: true })
-    try {
-      await fs.access(dbPath)
-    } catch {
-      await fs.writeFile(dbPath, "[]")
-    }
+    if (!userId) return []; // In hierarchical mode, we MUST have a userId
+    
+    const kbPath = getUserKBPath(userId);
+    if (!existsSync(kbPath)) return [];
+    
+    const data = await fs.readFile(kbPath, "utf-8")
+    const parsed = JSON.parse(data)
+    return parsed.sources || []
   } catch (error) {
-    console.error("Failed to initialize DB", error)
+    return []
   }
 }
 
-export async function getSources(): Promise<KBSource[]> {
-  await ensureDb()
-  const data = await fs.readFile(dbPath, "utf-8")
-  return JSON.parse(data)
-}
-
-export async function addSource(source: Omit<KBSource, "id" | "addedAt">): Promise<KBSource> {
-  const sources = await getSources()
+export async function addSource(source: Omit<KBSource, "id" | "addedAt"> & { userId: string }): Promise<KBSource> {
+  const sources = await getSources(source.userId)
   const newSource: KBSource = {
     ...source,
-    id: crypto.randomUUID(),
+    id: Math.random().toString(36).substring(2, 11),
     addedAt: new Date().toISOString()
   }
+  
   sources.push(newSource)
-  await fs.writeFile(dbPath, JSON.stringify(sources, null, 2))
+  const kbPath = getUserKBPath(source.userId);
+  await fs.writeFile(kbPath, JSON.stringify({ sources }, null, 2))
   return newSource
 }
 
-export async function deleteSource(id: string): Promise<void> {
-  let sources = await getSources()
+export async function deleteSource(id: string, userId: string): Promise<void> {
+  let sources = await getSources(userId)
   sources = sources.filter(s => s.id !== id)
-  await fs.writeFile(dbPath, JSON.stringify(sources, null, 2))
+  const kbPath = getUserKBPath(userId);
+  await fs.writeFile(kbPath, JSON.stringify({ sources }, null, 2))
+}
+
+// Keep for migration script or anonymous session claiming
+export async function claimLegacyData(userId: string, legacySources: KBSource[] = []) {
+  if (!legacySources || legacySources.length === 0) return;
+  const sources = await getSources(userId);
+  const updated = [...sources, ...legacySources.map(s => ({ ...s, userId }))];
+  const kbPath = getUserKBPath(userId);
+  await fs.writeFile(kbPath, JSON.stringify({ sources: updated }, null, 2));
 }

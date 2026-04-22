@@ -1,0 +1,15 @@
+{
+  "id": "aacd2763-0f89-4811-9d09-1127f7acf89d",
+  "email": "singhash058@gmail.com",
+  "password": "pinaka&0987",
+  "isProfileComplete": true,
+  "createdAt": "2026-04-22T13:37:51.874Z",
+  "profile": {
+    "name": "Ashutosh Singh",
+    "college": "AIT Pune",
+    "university": "SPPU",
+    "course": "Computer Engineering",
+    "semester": "6",
+    "examDate": "2026-05-26"
+  }
+}
