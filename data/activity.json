@@ -1,0 +1,92 @@
+[
+  {
+    "userId": "5c1bf72e-9dbc-43d0-9bc5-c168373391f8",
+    "subject": "DBMS",
+    "course": "Computer Engineering",
+    "action": "chat",
+    "topic": "Database Fundamentals",
+    "queryType": "query",
+    "time": "2026-04-23T13:37:13.103Z"
+  },
+  {
+    "userId": "5c1bf72e-9dbc-43d0-9bc5-c168373391f8",
+    "subject": "DBMS",
+    "course": "Computer Engineering",
+    "action": "chat",
+    "topic": "Transactions",
+    "queryType": "query",
+    "time": "2026-04-23T13:38:53.071Z"
+  },
+  {
+    "userId": "5c1bf72e-9dbc-43d0-9bc5-c168373391f8",
+    "subject": "DBMS",
+    "course": "Computer Engineering",
+    "action": "chat",
+    "topic": "SQL",
+    "queryType": "query",
+    "time": "2026-04-23T13:39:21.365Z"
+  },
+  {
+    "userId": "5c1bf72e-9dbc-43d0-9bc5-c168373391f8",
+    "subject": "DBMS",
+    "course": "Computer Engineering",
+    "action": "chat",
+    "topic": "Transactions",
+    "queryType": "strategy",
+    "time": "2026-04-23T13:41:42.682Z"
+  },
+  {
+    "userId": "cde10782-379e-4a67-bac6-eb7461b17cf6",
+    "subject": "DBMS",
+    "course": "Computer Engineering",
+    "action": "chat",
+    "topic": "Database Fundamentals",
+    "queryType": "strategy",
+    "time": "2026-04-23T13:51:19.117Z"
+  },
+  {
+    "userId": "cde10782-379e-4a67-bac6-eb7461b17cf6",
+    "subject": "DBMS",
+    "course": "Computer Engineering",
+    "action": "chat",
+    "topic": "ER Modeling",
+    "queryType": "query",
+    "time": "2026-04-23T13:52:42.099Z"
+  },
+  {
+    "userId": "aacd2763-0f89-4811-9d09-1127f7acf89d",
+    "subject": "DBMS",
+    "course": "Computer Engineering",
+    "action": "chat",
+    "topic": "Database Fundamentals",
+    "queryType": "strategy",
+    "time": "2026-04-23T13:57:42.433Z"
+  },
+  {
+    "userId": "aacd2763-0f89-4811-9d09-1127f7acf89d",
+    "subject": "DBMS",
+    "course": "Computer Engineering",
+    "action": "chat",
+    "topic": "SQL",
+    "queryType": "query",
+    "time": "2026-04-23T13:58:27.622Z"
+  },
+  {
+    "userId": "aacd2763-0f89-4811-9d09-1127f7acf89d",
+    "subject": "DBMS",
+    "course": "Computer Engineering",
+    "action": "chat",
+    "topic": "Concurrency Control",
+    "queryType": "query",
+    "time": "2026-04-23T13:58:55.411Z"
+  },
+  {
+    "userId": "cde10782-379e-4a67-bac6-eb7461b17cf6",
+    "subject": "DBMS",
+    "course": "Computer Engineering",
+    "action": "chat",
+    "topic": "Concurrency Control",
+    "queryType": "query",
+    "time": "2026-04-23T14:00:26.052Z"
+  }
+]

@@ -39,6 +39,7 @@ export function getChatSessions(userId: string): ChatSession[] {
       new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
     );
   } catch (error) {
+    console.error(`[Chat-DB] Error reading sessions for user ${userId}:`, error);
     return [];
   }
 }
@@ -77,7 +78,10 @@ export function addMessageToSession(userId: string, id: string, message: Omit<Ch
   const sessions = getChatSessions(userId);
   const index = sessions.findIndex(s => s.id === id);
   
-  if (index === -1) return null;
+  if (index === -1) {
+    console.warn(`[Chat-DB] Session ${id} not found for user ${userId}. Available:`, sessions.map(s => s.id));
+    return null;
+  }
   
   const newMessage: ChatMessage = {
     ...message,

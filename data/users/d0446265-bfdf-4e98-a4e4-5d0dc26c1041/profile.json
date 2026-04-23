@@ -1,0 +1,15 @@
+{
+  "id": "d0446265-bfdf-4e98-a4e4-5d0dc26c1041",
+  "email": "aaronsmith@gmail.com",
+  "password": "p0o9I*u707",
+  "isProfileComplete": true,
+  "createdAt": "2026-04-23T14:11:05.841Z",
+  "profile": {
+    "name": "Aaron Smith",
+    "college": "AIT Pune",
+    "university": "SPPU",
+    "course": "Computer Engineering",
+    "semester": "6",
+    "examDate": "2026-05-26"
+  }
+}

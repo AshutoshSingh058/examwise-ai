@@ -1,3 +1,6 @@
+import { NextResponse } from "next/server";
+import { deleteSource } from "@/lib/kb-db";
+
 export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;

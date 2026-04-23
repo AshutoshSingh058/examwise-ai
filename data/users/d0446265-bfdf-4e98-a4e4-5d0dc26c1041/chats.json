@@ -1,0 +1,20 @@
+{
+  "sessions": [
+    {
+      "id": "0bdcfc33-0167-44e5-be26-7c287841ea0c",
+      "userId": "d0446265-bfdf-4e98-a4e4-5d0dc26c1041",
+      "title": "New Chat",
+      "messages": [],
+      "createdAt": "2026-04-23T14:11:38.959Z",
+      "updatedAt": "2026-04-23T14:11:38.959Z"
+    },
+    {
+      "id": "1b3406f3-7434-418c-8600-81f80a6d08d6",
+      "userId": "d0446265-bfdf-4e98-a4e4-5d0dc26c1041",
+      "title": "New Chat",
+      "messages": [],
+      "createdAt": "2026-04-23T14:11:38.992Z",
+      "updatedAt": "2026-04-23T14:11:38.992Z"
+    }
+  ]
+}

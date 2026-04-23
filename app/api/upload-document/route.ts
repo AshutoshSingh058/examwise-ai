@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { addSource } from "@/lib/kb-db"
 import { universalParse } from "@/lib/parser"
+import { logActivity, detectTopic, detectSubject } from "@/lib/activity-db"
 
 export async function POST(req: Request) {
   try {
@@ -28,6 +29,16 @@ export async function POST(req: Request) {
       content: extractedText,
       userId: formData.get("userId") as string // New: Attach userId
     })
+
+    // Log the activity
+    logActivity({
+        userId: formData.get("userId") as string,
+        subject: detectSubject(file.name + " " + (subject || "")),
+        course: "BTech", 
+        action: "upload",
+        topic: detectTopic(file.name + " " + extractedText.slice(0, 500)),
+        queryType: "document"
+    }).catch(e => console.error("Activity Logging Error:", e));
 
     return NextResponse.json(newSource)
   } catch (error: any) {
