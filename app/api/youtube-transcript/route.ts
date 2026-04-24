@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { YoutubeTranscript } from 'youtube-transcript';
 import { ChatService } from '@/lib/ai/chat-service';
 import { getAIModel, isAIConfigured } from '@/lib/ai/gemini';
+import { AI_MODELS } from '@/lib/ai/config';
 
 export async function POST(req: Request) {
   try {
@@ -27,7 +28,7 @@ export async function POST(req: Request) {
     let metadataHeader = "";
     if (isAIConfigured()) {
       try {
-        const model = getAIModel("EXTRACTION_MODEL");
+        const model = getAIModel({ model: AI_MODELS.EXTRACTION });
         const prompt = `
           Analyze the following YouTube video transcript and generate a structured metadata header in English.
           If the transcript is in a language other than English (e.g., Hindi), translate the summary and key terms to English.

@@ -91,8 +91,11 @@ export function addMessageToSession(userId: string, id: string, message: Omit<Ch
   sessions[index].messages.push(newMessage);
   sessions[index].updatedAt = new Date().toISOString();
   
-  // Update title if it's the first user message
-  if (sessions[index].messages.filter(m => m.role === 'user').length === 1 && message.role === 'user') {
+  // Update title if it's the first user message AND title is still "New Chat"
+  const currentTitle = sessions[index].title;
+  const isDefaultTitle = currentTitle === 'New Chat';
+  
+  if (isDefaultTitle && sessions[index].messages.filter(m => m.role === 'user').length === 1 && message.role === 'user') {
     sessions[index].title = message.content.slice(0, 30) + (message.content.length > 30 ? '...' : '');
   }
   

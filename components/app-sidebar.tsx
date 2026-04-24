@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { MessageSquarePlus, Search, History, BookOpen, TrendingUp, Settings, UserCircle, Loader2 } from "lucide-react"
+import { MessageSquarePlus, Search, History, BookOpen, TrendingUp, Settings, UserCircle, Loader2, Zap } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -110,7 +110,7 @@ export function AppSidebar() {
                   {isLoading ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
                   ) : (
-                    <TrendingUp className="h-3.5 w-3.5 transition-transform group-hover/prep:scale-110" />
+                    <Zap className="h-3.5 w-3.5 transition-transform group-hover/prep:scale-110 fill-green-600/20" />
                   )}
                   <span className="text-xs font-semibold">Last Minute Prep</span>
                 </SidebarMenuButton>
