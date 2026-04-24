@@ -59,13 +59,38 @@ export function AppSidebar() {
     }
   }
 
+  const handlePrepClick = async () => {
+    if (!userId) return
+    setIsLoading(true)
+    try {
+      const res = await fetch(`/api/chat/${userId}/prep`, { method: "POST" })
+      const data = await res.json()
+      if (data.chatId) {
+        router.push(`/chat/${userId}/${data.chatId}`)
+        fetchChats(userId)
+      } else {
+        alert("Could not generate prep guide. Please try again.")
+      }
+    } catch (e) {
+      console.error("Failed to generate prep guide")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <Sidebar collapsible="none" className="border-r border-border/50">
       <SidebarContent>
         {/* TOP */}
         <SidebarGroup className="pt-4">
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="gap-2">
+              <SidebarMenuItem>
+                <SidebarMenuButton>
+                  <Search className="h-4 w-4" />
+                  <span>Search Chats</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton 
                   onClick={handleNewChat} 
@@ -77,9 +102,17 @@ export function AppSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton>
-                  <Search className="h-4 w-4" />
-                  <span>Search Chats</span>
+                <SidebarMenuButton
+                  onClick={handlePrepClick}
+                  disabled={isLoading}
+                  className="w-full justify-start gap-2 text-green-600/80 hover:text-green-600 transition-all border border-green-500/10 hover:border-green-500/20 group/prep"
+                >
+                  {isLoading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <TrendingUp className="h-3.5 w-3.5 transition-transform group-hover/prep:scale-110" />
+                  )}
+                  <span className="text-xs font-semibold">Last Minute Prep</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
@@ -114,23 +147,22 @@ export function AppSidebar() {
           </SidebarGroup>
         )}
 
-        {/* LIBRARY */}
         <SidebarGroup>
-          <SidebarGroupLabel>Library</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-foreground font-bold text-[11px] tracking-wider uppercase opacity-80">Library</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="gap-0.5">
               <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={pathname?.startsWith("/knowledge-base")}>
+                <SidebarMenuButton asChild isActive={pathname?.startsWith("/knowledge-base")} className="hover:text-green-600 transition-colors group/lib">
                   <Link href={userId ? `/knowledge-base/${userId}` : "/signup"}>
-                    <BookOpen className="h-4 w-4" />
+                    <BookOpen className="h-4 w-4 opacity-70 group-hover/lib:text-green-600" />
                     <span>Knowledge Base</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={pathname === "/hot-topics"}>
+                <SidebarMenuButton asChild isActive={pathname === "/hot-topics"} className="hover:text-green-600 transition-colors group/lib">
                   <Link href="/hot-topics">
-                    <TrendingUp className="h-4 w-4" />
+                    <TrendingUp className="h-4 w-4 opacity-70 group-hover/lib:text-green-600" />
                     <span>Hot Topics</span>
                   </Link>
                 </SidebarMenuButton>
@@ -142,7 +174,7 @@ export function AppSidebar() {
 
       {/* BOTTOM */}
       <SidebarFooter>
-        <SidebarMenu>
+        <SidebarMenu className="gap-0.5">
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Link href="#">

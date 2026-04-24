@@ -167,7 +167,10 @@ export default function HotTopicsPage() {
                    </div>
                    <div className="flex items-center gap-2">
                      {isRedirecting && <Loader2 className="h-3 w-3 animate-spin text-primary" />}
-                     <Badge variant={i === 0 ? "default" : "secondary"}>
+                     <Badge 
+                       variant={i === 0 ? "outline" : "secondary"}
+                       className={i === 0 ? "border-green-500 text-green-500" : ""}
+                     >
                        {i === 0 ? "🔥 Hot" : topic.rising > 0 ? "📈 Rising" : "Active"}
                      </Badge>
                    </div>

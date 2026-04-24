@@ -305,7 +305,7 @@ export default function KnowledgeBasePage({ params: paramsPromise }: { params: P
                 <div className="col-span-2 uppercase text-xs tracking-wider font-semibold">{source.type}</div>
                 <div className="col-span-2 truncate text-muted-foreground">{source.subject}</div>
                 <div className="col-span-2">
-                  <span className={`px-2 py-1 rounded-full text-xs ${source.status === 'processed' ? 'bg-green-500/10 text-green-500' : 'bg-yellow-500/10 text-yellow-500 animate-pulse'}`}>
+                  <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter border ${source.status === 'processed' ? 'border-green-500 text-green-500' : 'border-yellow-500/50 text-yellow-500 animate-pulse'}`}>
                     {source.status}
                   </span>
                 </div>
