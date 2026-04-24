@@ -1,542 +1,614 @@
 [
   {
-    "userId": "b3d56ea4-8312-437b-b3da-73c4921d7725",
-    "subject": "Data Structures",
+    "userId": "1ef98b8e-9398-4cd6-9d3b-ef91718929d3",
+    "subject": "Web Technology",
     "course": "BCA",
-    "topic": "Graphs",
-    "action": "chat",
-    "queryType": "strategy",
-    "time": "2026-04-21T15:07:45.124Z"
-  },
-  {
-    "userId": "b3d56ea4-8312-437b-b3da-73c4921d7725",
-    "subject": "Data Structures",
-    "course": "BCA",
-    "topic": "Graphs",
-    "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-21T17:59:55.129Z"
-  },
-  {
-    "userId": "5c18baaa-8d00-4825-8551-60d5ab6050a6",
-    "subject": "Operating Systems",
-    "course": "BTech CSE",
-    "topic": "Memory Management",
+    "topic": "Next.js",
     "action": "upload",
     "queryType": "strategy",
-    "time": "2026-04-21T21:37:50.562Z"
+    "time": "2026-04-22T12:48:55.670Z"
   },
   {
-    "userId": "024a9c26-4527-4beb-a859-725cb95a70c3",
-    "subject": "Data Structures",
-    "course": "BTech IT",
-    "topic": "Sorting",
-    "action": "chat",
-    "queryType": "strategy",
-    "time": "2026-04-22T00:10:39.800Z"
-  },
-  {
-    "userId": "5ce0a0fe-04b6-4a24-b051-017d6a4dc15a",
-    "subject": "Data Structures",
-    "course": "BTech IT",
-    "topic": "Graphs",
-    "action": "chat",
-    "queryType": "strategy",
-    "time": "2026-04-22T01:50:16.859Z"
-  },
-  {
-    "userId": "27be4c5d-a83a-43a2-8b9a-de767d621d5c",
-    "subject": "Data Structures",
+    "userId": "3066af5b-1765-4cd6-828d-6a80172df4ee",
+    "subject": "DBMS",
     "course": "BTech CSE",
-    "topic": "Stacks",
-    "action": "chat",
+    "topic": "ER Modeling",
+    "action": "upload",
     "queryType": "strategy",
-    "time": "2026-04-22T02:33:54.009Z"
+    "time": "2026-04-22T15:32:17.572Z"
   },
   {
-    "userId": "5ce0a0fe-04b6-4a24-b051-017d6a4dc15a",
+    "userId": "3066af5b-1765-4cd6-828d-6a80172df4ee",
+    "subject": "Web Technology",
+    "course": "BTech CSE",
+    "topic": "Next.js",
+    "action": "chat",
+    "queryType": "strategy",
+    "time": "2026-04-22T16:15:43.735Z"
+  },
+  {
+    "userId": "1ef98b8e-9398-4cd6-9d3b-ef91718929d3",
+    "subject": "Web Technology",
+    "course": "BTech CSE",
+    "topic": "JavaScript",
+    "action": "chat",
+    "queryType": "strategy",
+    "time": "2026-04-22T16:40:22.779Z"
+  },
+  {
+    "userId": "3066af5b-1765-4cd6-828d-6a80172df4ee",
+    "subject": "Operating Systems",
+    "course": "BCA",
+    "topic": "Process Scheduling",
+    "action": "upload",
+    "queryType": "query",
+    "time": "2026-04-22T18:04:22.471Z"
+  },
+  {
+    "userId": "3066af5b-1765-4cd6-828d-6a80172df4ee",
+    "subject": "Web Technology",
+    "course": "BTech CSE",
+    "topic": "HTML/CSS",
+    "action": "upload",
+    "queryType": "query",
+    "time": "2026-04-22T21:07:02.933Z"
+  },
+  {
+    "userId": "e68155f3-e01c-4054-8b4e-c5eabe7ee62d",
+    "subject": "Web Technology",
+    "course": "BTech CSE",
+    "topic": "React",
+    "action": "chat",
+    "queryType": "query",
+    "time": "2026-04-23T01:33:10.250Z"
+  },
+  {
+    "userId": "e68155f3-e01c-4054-8b4e-c5eabe7ee62d",
+    "subject": "Data Structures",
+    "course": "BCA",
+    "topic": "Queues",
+    "action": "upload",
+    "queryType": "query",
+    "time": "2026-04-23T04:42:57.593Z"
+  },
+  {
+    "userId": "35522fd5-0133-4101-953d-2b5b0c0353e0",
+    "subject": "Data Structures",
+    "course": "BCA",
+    "topic": "Queues",
+    "action": "chat",
+    "queryType": "strategy",
+    "time": "2026-04-23T05:07:25.460Z"
+  },
+  {
+    "userId": "35522fd5-0133-4101-953d-2b5b0c0353e0",
+    "subject": "Web Technology",
+    "course": "BCA",
+    "topic": "Next.js",
+    "action": "chat",
+    "queryType": "strategy",
+    "time": "2026-04-23T06:44:31.761Z"
+  },
+  {
+    "userId": "0a41a676-2707-4571-9afd-0528316ad31a",
     "subject": "DBMS",
     "course": "BCA",
     "topic": "Transactions",
-    "action": "upload",
-    "queryType": "strategy",
-    "time": "2026-04-22T03:00:02.772Z"
-  },
-  {
-    "userId": "1b22b77f-af1d-4115-8ef0-8a6025d501e3",
-    "subject": "DBMS",
-    "course": "BTech CSE",
-    "topic": "ER Modeling",
-    "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-22T19:43:11.792Z"
-  },
-  {
-    "userId": "1b22b77f-af1d-4115-8ef0-8a6025d501e3",
-    "subject": "Operating Systems",
-    "course": "BTech CSE",
-    "topic": "Memory Management",
-    "action": "upload",
-    "queryType": "query",
-    "time": "2026-04-22T20:11:58.875Z"
-  },
-  {
-    "userId": "5c18baaa-8d00-4825-8551-60d5ab6050a6",
-    "subject": "Data Structures",
-    "course": "BTech CSE",
-    "topic": "Graphs",
-    "action": "upload",
-    "queryType": "strategy",
-    "time": "2026-04-22T21:07:13.028Z"
-  },
-  {
-    "userId": "3d9d25ed-4391-4ec0-82c0-e80b83007655",
-    "subject": "Web Technology",
-    "course": "BTech IT",
-    "topic": "JavaScript",
-    "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T01:19:43.711Z"
-  },
-  {
-    "userId": "5ce0a0fe-04b6-4a24-b051-017d6a4dc15a",
-    "subject": "DBMS",
-    "course": "BTech CSE",
-    "topic": "ER Modeling",
     "action": "chat",
     "queryType": "strategy",
-    "time": "2026-04-23T01:29:38.957Z"
+    "time": "2026-04-23T11:05:58.640Z"
   },
   {
-    "userId": "5c18baaa-8d00-4825-8551-60d5ab6050a6",
-    "subject": "DBMS",
-    "course": "BTech IT",
-    "topic": "Indexing",
-    "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T01:59:11.491Z"
-  },
-  {
-    "userId": "024a9c26-4527-4beb-a859-725cb95a70c3",
-    "subject": "DBMS",
-    "course": "BTech IT",
-    "topic": "SQL",
-    "action": "upload",
-    "queryType": "query",
-    "time": "2026-04-23T02:37:34.059Z"
-  },
-  {
-    "userId": "1b22b77f-af1d-4115-8ef0-8a6025d501e3",
-    "subject": "Web Technology",
-    "course": "BTech IT",
-    "topic": "React",
-    "action": "upload",
-    "queryType": "strategy",
-    "time": "2026-04-23T02:45:39.747Z"
-  },
-  {
-    "userId": "3d9d25ed-4391-4ec0-82c0-e80b83007655",
-    "subject": "Web Technology",
-    "course": "BCA",
-    "topic": "HTML/CSS",
-    "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T03:30:18.135Z"
-  },
-  {
-    "userId": "5c18baaa-8d00-4825-8551-60d5ab6050a6",
-    "subject": "Web Technology",
-    "course": "BTech CSE",
-    "topic": "JavaScript",
-    "action": "upload",
-    "queryType": "query",
-    "time": "2026-04-23T03:30:30.768Z"
-  },
-  {
-    "userId": "024a9c26-4527-4beb-a859-725cb95a70c3",
-    "subject": "Operating Systems",
-    "course": "BTech IT",
-    "topic": "Deadlocks",
-    "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T03:44:57.057Z"
-  },
-  {
-    "userId": "5c18baaa-8d00-4825-8551-60d5ab6050a6",
-    "subject": "Data Structures",
-    "course": "BCA",
-    "topic": "Sorting",
-    "action": "chat",
-    "queryType": "strategy",
-    "time": "2026-04-23T03:53:38.664Z"
-  },
-  {
-    "userId": "b3d56ea4-8312-437b-b3da-73c4921d7725",
-    "subject": "DBMS",
-    "course": "BTech IT",
-    "topic": "ER Modeling",
-    "action": "upload",
-    "queryType": "query",
-    "time": "2026-04-23T03:54:44.906Z"
-  },
-  {
-    "userId": "024a9c26-4527-4beb-a859-725cb95a70c3",
-    "subject": "Data Structures",
-    "course": "BTech CSE",
-    "topic": "Binary Trees",
-    "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T04:07:57.050Z"
-  },
-  {
-    "userId": "5ce0a0fe-04b6-4a24-b051-017d6a4dc15a",
-    "subject": "Data Structures",
-    "course": "BTech IT",
-    "topic": "Stacks",
-    "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T04:12:08.533Z"
-  },
-  {
-    "userId": "024a9c26-4527-4beb-a859-725cb95a70c3",
+    "userId": "35522fd5-0133-4101-953d-2b5b0c0353e0",
     "subject": "Data Structures",
     "course": "BTech IT",
     "topic": "Sorting",
     "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T04:20:01.688Z"
-  },
-  {
-    "userId": "b3d56ea4-8312-437b-b3da-73c4921d7725",
-    "subject": "Web Technology",
-    "course": "BTech IT",
-    "topic": "HTML/CSS",
-    "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T04:31:47.848Z"
-  },
-  {
-    "userId": "5c18baaa-8d00-4825-8551-60d5ab6050a6",
-    "subject": "DBMS",
-    "course": "BCA",
-    "topic": "Normalization",
-    "action": "chat",
     "queryType": "strategy",
-    "time": "2026-04-23T04:56:07.860Z"
+    "time": "2026-04-23T11:24:06.157Z"
   },
   {
-    "userId": "5c18baaa-8d00-4825-8551-60d5ab6050a6",
-    "subject": "Web Technology",
-    "course": "BTech CSE",
-    "topic": "React",
-    "action": "chat",
-    "queryType": "strategy",
-    "time": "2026-04-23T05:10:35.756Z"
-  },
-  {
-    "userId": "27be4c5d-a83a-43a2-8b9a-de767d621d5c",
-    "subject": "Data Structures",
-    "course": "BCA",
-    "topic": "Graphs",
-    "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T05:30:34.845Z"
-  },
-  {
-    "userId": "35967498-1155-4b4a-9025-9c20880b7578",
-    "subject": "Data Structures",
-    "course": "BCA",
-    "topic": "Graphs",
-    "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T05:56:21.452Z"
-  },
-  {
-    "userId": "27be4c5d-a83a-43a2-8b9a-de767d621d5c",
-    "subject": "DBMS",
-    "course": "BCA",
-    "topic": "SQL",
-    "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T06:29:38.067Z"
-  },
-  {
-    "userId": "5ce0a0fe-04b6-4a24-b051-017d6a4dc15a",
+    "userId": "3066af5b-1765-4cd6-828d-6a80172df4ee",
     "subject": "Data Structures",
     "course": "BTech CSE",
     "topic": "Linked Lists",
     "action": "chat",
-    "queryType": "strategy",
-    "time": "2026-04-23T06:37:32.340Z"
-  },
-  {
-    "userId": "3d9d25ed-4391-4ec0-82c0-e80b83007655",
-    "subject": "DBMS",
-    "course": "BTech IT",
-    "topic": "SQL",
-    "action": "chat",
-    "queryType": "strategy",
-    "time": "2026-04-23T06:50:51.201Z"
-  },
-  {
-    "userId": "566af888-171f-4c37-844e-6f1b9886ed5c",
-    "subject": "Web Technology",
-    "course": "BCA",
-    "topic": "HTML/CSS",
-    "action": "chat",
-    "queryType": "strategy",
-    "time": "2026-04-23T07:07:16.879Z"
-  },
-  {
-    "userId": "3d9d25ed-4391-4ec0-82c0-e80b83007655",
-    "subject": "Operating Systems",
-    "course": "BTech IT",
-    "topic": "Memory Management",
-    "action": "chat",
-    "queryType": "strategy",
-    "time": "2026-04-23T07:09:13.012Z"
-  },
-  {
-    "userId": "5ce0a0fe-04b6-4a24-b051-017d6a4dc15a",
-    "subject": "Operating Systems",
-    "course": "BTech IT",
-    "topic": "Deadlocks",
-    "action": "chat",
-    "queryType": "strategy",
-    "time": "2026-04-23T07:15:49.823Z"
-  },
-  {
-    "userId": "d2f9b987-db61-41d4-810c-056120cea36b",
-    "subject": "Web Technology",
-    "course": "BTech CSE",
-    "topic": "Next.js",
-    "action": "chat",
-    "queryType": "strategy",
-    "time": "2026-04-23T07:27:44.276Z"
-  },
-  {
-    "userId": "1b22b77f-af1d-4115-8ef0-8a6025d501e3",
-    "subject": "Web Technology",
-    "course": "BCA",
-    "topic": "HTML/CSS",
-    "action": "upload",
     "queryType": "query",
-    "time": "2026-04-23T07:37:35.266Z"
+    "time": "2026-04-23T20:48:18.257Z"
   },
   {
-    "userId": "566af888-171f-4c37-844e-6f1b9886ed5c",
-    "subject": "DBMS",
-    "course": "BTech IT",
-    "topic": "Transactions",
-    "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T07:40:41.075Z"
-  },
-  {
-    "userId": "024a9c26-4527-4beb-a859-725cb95a70c3",
-    "subject": "Web Technology",
-    "course": "BTech CSE",
-    "topic": "React",
-    "action": "upload",
-    "queryType": "strategy",
-    "time": "2026-04-23T07:48:58.630Z"
-  },
-  {
-    "userId": "5c18baaa-8d00-4825-8551-60d5ab6050a6",
+    "userId": "3066af5b-1765-4cd6-828d-6a80172df4ee",
     "subject": "DBMS",
     "course": "BTech CSE",
-    "topic": "SQL",
-    "action": "chat",
-    "queryType": "strategy",
-    "time": "2026-04-23T08:07:14.182Z"
-  },
-  {
-    "userId": "35967498-1155-4b4a-9025-9c20880b7578",
-    "subject": "DBMS",
-    "course": "BCA",
     "topic": "Normalization",
     "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T08:36:10.035Z"
-  },
-  {
-    "userId": "5ce0a0fe-04b6-4a24-b051-017d6a4dc15a",
-    "subject": "Web Technology",
-    "course": "BTech IT",
-    "topic": "Next.js",
-    "action": "chat",
     "queryType": "strategy",
-    "time": "2026-04-23T08:56:04.472Z"
+    "time": "2026-04-23T22:21:35.404Z"
   },
   {
-    "userId": "d2f9b987-db61-41d4-810c-056120cea36b",
-    "subject": "Web Technology",
+    "userId": "0a41a676-2707-4571-9afd-0528316ad31a",
+    "subject": "Data Structures",
     "course": "BTech IT",
-    "topic": "Next.js",
+    "topic": "Graphs",
     "action": "chat",
     "queryType": "query",
-    "time": "2026-04-23T09:17:49.502Z"
+    "time": "2026-04-23T22:46:24.850Z"
   },
   {
-    "userId": "35967498-1155-4b4a-9025-9c20880b7578",
-    "subject": "Web Technology",
-    "course": "BTech IT",
-    "topic": "Next.js",
-    "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T09:51:40.709Z"
-  },
-  {
-    "userId": "566af888-171f-4c37-844e-6f1b9886ed5c",
+    "userId": "3066af5b-1765-4cd6-828d-6a80172df4ee",
     "subject": "Operating Systems",
     "course": "BCA",
     "topic": "Memory Management",
     "action": "chat",
     "queryType": "strategy",
-    "time": "2026-04-23T09:52:35.345Z"
+    "time": "2026-04-23T22:49:27.159Z"
   },
   {
-    "userId": "5ce0a0fe-04b6-4a24-b051-017d6a4dc15a",
-    "subject": "Web Technology",
+    "userId": "59d373df-cb18-4ecc-89c1-960254a7cb96",
+    "subject": "Operating Systems",
     "course": "BTech CSE",
-    "topic": "HTML/CSS",
+    "topic": "Process Scheduling",
     "action": "chat",
     "queryType": "query",
-    "time": "2026-04-23T09:57:01.133Z"
+    "time": "2026-04-23T23:07:51.145Z"
   },
   {
-    "userId": "d2f9b987-db61-41d4-810c-056120cea36b",
-    "subject": "Web Technology",
-    "course": "BCA",
-    "topic": "React",
-    "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T10:03:37.711Z"
-  },
-  {
-    "userId": "1b22b77f-af1d-4115-8ef0-8a6025d501e3",
-    "subject": "Data Structures",
-    "course": "BTech CSE",
-    "topic": "Stacks",
-    "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T10:05:57.873Z"
-  },
-  {
-    "userId": "024a9c26-4527-4beb-a859-725cb95a70c3",
-    "subject": "DBMS",
-    "course": "BCA",
-    "topic": "Indexing",
-    "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T10:44:54.786Z"
-  },
-  {
-    "userId": "566af888-171f-4c37-844e-6f1b9886ed5c",
-    "subject": "Web Technology",
-    "course": "BCA",
-    "topic": "JavaScript",
-    "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T11:00:56.924Z"
-  },
-  {
-    "userId": "d2f9b987-db61-41d4-810c-056120cea36b",
-    "subject": "Web Technology",
-    "course": "BTech IT",
-    "topic": "React",
-    "action": "chat",
-    "queryType": "strategy",
-    "time": "2026-04-23T11:01:12.314Z"
-  },
-  {
-    "userId": "27be4c5d-a83a-43a2-8b9a-de767d621d5c",
-    "subject": "DBMS",
-    "course": "BTech CSE",
-    "topic": "ER Modeling",
-    "action": "chat",
-    "queryType": "strategy",
-    "time": "2026-04-23T11:27:42.195Z"
-  },
-  {
-    "userId": "566af888-171f-4c37-844e-6f1b9886ed5c",
-    "subject": "Web Technology",
-    "course": "BTech CSE",
-    "topic": "React",
-    "action": "chat",
-    "queryType": "strategy",
-    "time": "2026-04-23T11:29:33.127Z"
-  },
-  {
-    "userId": "3d9d25ed-4391-4ec0-82c0-e80b83007655",
-    "subject": "Data Structures",
-    "course": "BCA",
-    "topic": "Graphs",
-    "action": "upload",
-    "queryType": "query",
-    "time": "2026-04-23T11:36:52.923Z"
-  },
-  {
-    "userId": "27be4c5d-a83a-43a2-8b9a-de767d621d5c",
-    "subject": "Web Technology",
-    "course": "BCA",
-    "topic": "HTML/CSS",
-    "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T12:06:42.462Z"
-  },
-  {
-    "userId": "566af888-171f-4c37-844e-6f1b9886ed5c",
+    "userId": "0a41a676-2707-4571-9afd-0528316ad31a",
     "subject": "Data Structures",
     "course": "BTech IT",
     "topic": "Linked Lists",
-    "action": "chat",
-    "queryType": "strategy",
-    "time": "2026-04-23T12:34:01.505Z"
+    "action": "upload",
+    "queryType": "query",
+    "time": "2026-04-23T23:22:21.547Z"
   },
   {
-    "userId": "b3d56ea4-8312-437b-b3da-73c4921d7725",
+    "userId": "3066af5b-1765-4cd6-828d-6a80172df4ee",
     "subject": "Operating Systems",
-    "course": "BTech IT",
+    "course": "BTech CSE",
     "topic": "Memory Management",
     "action": "chat",
     "queryType": "query",
-    "time": "2026-04-23T12:51:02.349Z"
+    "time": "2026-04-23T23:56:22.462Z"
   },
   {
-    "userId": "1b22b77f-af1d-4115-8ef0-8a6025d501e3",
+    "userId": "e68155f3-e01c-4054-8b4e-c5eabe7ee62d",
+    "subject": "Data Structures",
+    "course": "BCA",
+    "topic": "Linked Lists",
+    "action": "upload",
+    "queryType": "query",
+    "time": "2026-04-23T23:59:04.230Z"
+  },
+  {
+    "userId": "a9629df6-65a5-468d-bb4a-f3d508a7ef57",
+    "subject": "DBMS",
+    "course": "BTech CSE",
+    "topic": "Transactions",
+    "action": "upload",
+    "queryType": "strategy",
+    "time": "2026-04-24T00:22:41.042Z"
+  },
+  {
+    "userId": "1ef98b8e-9398-4cd6-9d3b-ef91718929d3",
+    "subject": "Web Technology",
+    "course": "BCA",
+    "topic": "Next.js",
+    "action": "chat",
+    "queryType": "query",
+    "time": "2026-04-24T00:59:52.906Z"
+  },
+  {
+    "userId": "3066af5b-1765-4cd6-828d-6a80172df4ee",
+    "subject": "Web Technology",
+    "course": "BCA",
+    "topic": "Next.js",
+    "action": "chat",
+    "queryType": "strategy",
+    "time": "2026-04-24T01:11:59.824Z"
+  },
+  {
+    "userId": "35522fd5-0133-4101-953d-2b5b0c0353e0",
     "subject": "Web Technology",
     "course": "BTech IT",
-    "topic": "HTML/CSS",
+    "topic": "Next.js",
     "action": "chat",
-    "queryType": "strategy",
-    "time": "2026-04-23T13:10:52.088Z"
+    "queryType": "query",
+    "time": "2026-04-24T01:20:32.472Z"
   },
   {
-    "userId": "024a9c26-4527-4beb-a859-725cb95a70c3",
+    "userId": "35522fd5-0133-4101-953d-2b5b0c0353e0",
+    "subject": "Data Structures",
+    "course": "BCA",
+    "topic": "Sorting",
+    "action": "chat",
+    "queryType": "strategy",
+    "time": "2026-04-24T01:38:44.753Z"
+  },
+  {
+    "userId": "c4fe9c2f-9065-4ca5-9ca4-7b444f076a77",
+    "subject": "Web Technology",
+    "course": "BCA",
+    "topic": "React",
+    "action": "upload",
+    "queryType": "strategy",
+    "time": "2026-04-24T01:45:53.056Z"
+  },
+  {
+    "userId": "e68155f3-e01c-4054-8b4e-c5eabe7ee62d",
+    "subject": "Data Structures",
+    "course": "BCA",
+    "topic": "Sorting",
+    "action": "upload",
+    "queryType": "strategy",
+    "time": "2026-04-24T01:55:09.892Z"
+  },
+  {
+    "userId": "0a41a676-2707-4571-9afd-0528316ad31a",
     "subject": "Operating Systems",
-    "course": "BTech IT",
+    "course": "BTech CSE",
     "topic": "Memory Management",
     "action": "chat",
-    "queryType": "strategy",
-    "time": "2026-04-23T13:40:56.182Z"
+    "queryType": "query",
+    "time": "2026-04-24T02:09:50.181Z"
   },
   {
-    "userId": "1b22b77f-af1d-4115-8ef0-8a6025d501e3",
+    "userId": "c4fe9c2f-9065-4ca5-9ca4-7b444f076a77",
+    "subject": "DBMS",
+    "course": "BTech CSE",
+    "topic": "Transactions",
+    "action": "upload",
+    "queryType": "strategy",
+    "time": "2026-04-24T02:14:19.222Z"
+  },
+  {
+    "userId": "1ef98b8e-9398-4cd6-9d3b-ef91718929d3",
     "subject": "Data Structures",
     "course": "BTech CSE",
     "topic": "Binary Trees",
     "action": "chat",
-    "queryType": "query",
-    "time": "2026-04-23T13:54:12.141Z"
+    "queryType": "strategy",
+    "time": "2026-04-24T02:29:27.540Z"
   },
   {
-    "userId": "024a9c26-4527-4beb-a859-725cb95a70c3",
+    "userId": "c4fe9c2f-9065-4ca5-9ca4-7b444f076a77",
+    "subject": "Operating Systems",
+    "course": "BCA",
+    "topic": "Deadlocks",
+    "action": "chat",
+    "queryType": "query",
+    "time": "2026-04-24T02:33:38.703Z"
+  },
+  {
+    "userId": "e68155f3-e01c-4054-8b4e-c5eabe7ee62d",
+    "subject": "Web Technology",
+    "course": "BTech CSE",
+    "topic": "HTML/CSS",
+    "action": "upload",
+    "queryType": "strategy",
+    "time": "2026-04-24T03:08:36.511Z"
+  },
+  {
+    "userId": "e68155f3-e01c-4054-8b4e-c5eabe7ee62d",
+    "subject": "Operating Systems",
+    "course": "BTech CSE",
+    "topic": "Memory Management",
+    "action": "upload",
+    "queryType": "strategy",
+    "time": "2026-04-24T03:15:42.171Z"
+  },
+  {
+    "userId": "e68155f3-e01c-4054-8b4e-c5eabe7ee62d",
+    "subject": "DBMS",
+    "course": "BTech CSE",
+    "topic": "Concurrency Control",
+    "action": "upload",
+    "queryType": "query",
+    "time": "2026-04-24T03:35:56.289Z"
+  },
+  {
+    "userId": "026a9b79-3e77-49bc-bdbc-1893f6028f0d",
+    "subject": "Web Technology",
+    "course": "BTech CSE",
+    "topic": "HTML/CSS",
+    "action": "chat",
+    "queryType": "strategy",
+    "time": "2026-04-24T03:50:08.556Z"
+  },
+  {
+    "userId": "0a41a676-2707-4571-9afd-0528316ad31a",
+    "subject": "Operating Systems",
+    "course": "BCA",
+    "topic": "Memory Management",
+    "action": "chat",
+    "queryType": "query",
+    "time": "2026-04-24T04:04:14.443Z"
+  },
+  {
+    "userId": "e68155f3-e01c-4054-8b4e-c5eabe7ee62d",
+    "subject": "Data Structures",
+    "course": "BCA",
+    "topic": "Sorting",
+    "action": "chat",
+    "queryType": "strategy",
+    "time": "2026-04-24T04:12:06.380Z"
+  },
+  {
+    "userId": "1ef98b8e-9398-4cd6-9d3b-ef91718929d3",
+    "subject": "Web Technology",
+    "course": "BTech IT",
+    "topic": "HTML/CSS",
+    "action": "chat",
+    "queryType": "strategy",
+    "time": "2026-04-24T04:22:49.106Z"
+  },
+  {
+    "userId": "59d373df-cb18-4ecc-89c1-960254a7cb96",
+    "subject": "Data Structures",
+    "course": "BTech CSE",
+    "topic": "Graphs",
+    "action": "chat",
+    "queryType": "query",
+    "time": "2026-04-24T05:19:37.966Z"
+  },
+  {
+    "userId": "c4fe9c2f-9065-4ca5-9ca4-7b444f076a77",
+    "subject": "Web Technology",
+    "course": "BTech IT",
+    "topic": "React",
+    "action": "chat",
+    "queryType": "query",
+    "time": "2026-04-24T05:29:39.636Z"
+  },
+  {
+    "userId": "59d373df-cb18-4ecc-89c1-960254a7cb96",
+    "subject": "DBMS",
+    "course": "BTech CSE",
+    "topic": "Normalization",
+    "action": "chat",
+    "queryType": "strategy",
+    "time": "2026-04-24T05:30:26.658Z"
+  },
+  {
+    "userId": "e68155f3-e01c-4054-8b4e-c5eabe7ee62d",
+    "subject": "Operating Systems",
+    "course": "BCA",
+    "topic": "Deadlocks",
+    "action": "chat",
+    "queryType": "query",
+    "time": "2026-04-24T05:34:55.332Z"
+  },
+  {
+    "userId": "0a41a676-2707-4571-9afd-0528316ad31a",
+    "subject": "Data Structures",
+    "course": "BTech IT",
+    "topic": "Linked Lists",
+    "action": "upload",
+    "queryType": "query",
+    "time": "2026-04-24T06:02:44.501Z"
+  },
+  {
+    "userId": "3066af5b-1765-4cd6-828d-6a80172df4ee",
+    "subject": "Data Structures",
+    "course": "BTech CSE",
+    "topic": "Queues",
+    "action": "chat",
+    "queryType": "query",
+    "time": "2026-04-24T06:12:07.935Z"
+  },
+  {
+    "userId": "35522fd5-0133-4101-953d-2b5b0c0353e0",
+    "subject": "DBMS",
+    "course": "BTech IT",
+    "topic": "Transactions",
+    "action": "chat",
+    "queryType": "strategy",
+    "time": "2026-04-24T06:46:57.893Z"
+  },
+  {
+    "userId": "35522fd5-0133-4101-953d-2b5b0c0353e0",
+    "subject": "Data Structures",
+    "course": "BCA",
+    "topic": "Linked Lists",
+    "action": "chat",
+    "queryType": "query",
+    "time": "2026-04-24T06:51:27.144Z"
+  },
+  {
+    "userId": "1ef98b8e-9398-4cd6-9d3b-ef91718929d3",
+    "subject": "Operating Systems",
+    "course": "BCA",
+    "topic": "Memory Management",
+    "action": "chat",
+    "queryType": "query",
+    "time": "2026-04-24T06:56:14.827Z"
+  },
+  {
+    "userId": "35522fd5-0133-4101-953d-2b5b0c0353e0",
+    "subject": "DBMS",
+    "course": "BCA",
+    "topic": "Concurrency Control",
+    "action": "chat",
+    "queryType": "strategy",
+    "time": "2026-04-24T06:58:59.859Z"
+  },
+  {
+    "userId": "1ef98b8e-9398-4cd6-9d3b-ef91718929d3",
+    "subject": "DBMS",
+    "course": "BTech CSE",
+    "topic": "Indexing",
+    "action": "chat",
+    "queryType": "query",
+    "time": "2026-04-24T07:04:32.168Z"
+  },
+  {
+    "userId": "1ef98b8e-9398-4cd6-9d3b-ef91718929d3",
+    "subject": "Web Technology",
+    "course": "BTech CSE",
+    "topic": "Next.js",
+    "action": "upload",
+    "queryType": "strategy",
+    "time": "2026-04-24T07:28:59.621Z"
+  },
+  {
+    "userId": "35522fd5-0133-4101-953d-2b5b0c0353e0",
     "subject": "Web Technology",
     "course": "BCA",
     "topic": "React",
+    "action": "chat",
+    "queryType": "query",
+    "time": "2026-04-24T07:37:52.448Z"
+  },
+  {
+    "userId": "3066af5b-1765-4cd6-828d-6a80172df4ee",
+    "subject": "Web Technology",
+    "course": "BCA",
+    "topic": "Next.js",
+    "action": "chat",
+    "queryType": "query",
+    "time": "2026-04-24T08:10:43.961Z"
+  },
+  {
+    "userId": "e68155f3-e01c-4054-8b4e-c5eabe7ee62d",
+    "subject": "Data Structures",
+    "course": "BCA",
+    "topic": "Graphs",
+    "action": "chat",
+    "queryType": "query",
+    "time": "2026-04-24T08:13:46.094Z"
+  },
+  {
+    "userId": "a9629df6-65a5-468d-bb4a-f3d508a7ef57",
+    "subject": "DBMS",
+    "course": "BTech IT",
+    "topic": "Concurrency Control",
+    "action": "chat",
+    "queryType": "query",
+    "time": "2026-04-24T08:18:31.405Z"
+  },
+  {
+    "userId": "59d373df-cb18-4ecc-89c1-960254a7cb96",
+    "subject": "Data Structures",
+    "course": "BTech IT",
+    "topic": "Linked Lists",
     "action": "upload",
     "queryType": "query",
-    "time": "2026-04-23T14:16:07.140Z"
+    "time": "2026-04-24T08:20:44.796Z"
+  },
+  {
+    "userId": "1ef98b8e-9398-4cd6-9d3b-ef91718929d3",
+    "subject": "Web Technology",
+    "course": "BTech CSE",
+    "topic": "Next.js",
+    "action": "chat",
+    "queryType": "query",
+    "time": "2026-04-24T08:20:57.947Z"
+  },
+  {
+    "userId": "02121436-20d1-4d03-995c-5e6146ff918e",
+    "subject": "Data Structures",
+    "course": "BCA",
+    "topic": "Binary Trees",
+    "action": "chat",
+    "queryType": "strategy",
+    "time": "2026-04-24T08:26:40.709Z"
+  },
+  {
+    "userId": "0a41a676-2707-4571-9afd-0528316ad31a",
+    "subject": "Operating Systems",
+    "course": "BTech CSE",
+    "topic": "Memory Management",
+    "action": "chat",
+    "queryType": "strategy",
+    "time": "2026-04-24T08:27:56.541Z"
+  },
+  {
+    "userId": "3066af5b-1765-4cd6-828d-6a80172df4ee",
+    "subject": "Data Structures",
+    "course": "BCA",
+    "topic": "Binary Trees",
+    "action": "chat",
+    "queryType": "query",
+    "time": "2026-04-24T08:41:35.139Z"
+  },
+  {
+    "userId": "026a9b79-3e77-49bc-bdbc-1893f6028f0d",
+    "subject": "Data Structures",
+    "course": "BTech IT",
+    "topic": "Linked Lists",
+    "action": "upload",
+    "queryType": "query",
+    "time": "2026-04-24T08:42:14.046Z"
+  },
+  {
+    "userId": "5c1bf72e-9dbc-43d0-9bc5-c168373391f8",
+    "subject": "DBMS",
+    "course": "Computer Engineering",
+    "action": "chat",
+    "topic": "Transactions",
+    "queryType": "strategy",
+    "time": "2026-04-24T08:53:55.328Z"
+  },
+  {
+    "userId": "5c1bf72e-9dbc-43d0-9bc5-c168373391f8",
+    "subject": "General",
+    "course": "Computer Engineering",
+    "action": "chat",
+    "topic": "General",
+    "queryType": "query",
+    "time": "2026-04-24T08:55:59.195Z"
+  },
+  {
+    "userId": "5c1bf72e-9dbc-43d0-9bc5-c168373391f8",
+    "subject": "DBMS",
+    "course": "Computer Engineering",
+    "action": "chat",
+    "topic": "Transactions",
+    "queryType": "query",
+    "time": "2026-04-24T08:56:27.298Z"
+  },
+  {
+    "userId": "5c1bf72e-9dbc-43d0-9bc5-c168373391f8",
+    "subject": "General",
+    "course": "Computer Engineering",
+    "action": "chat",
+    "topic": "General",
+    "queryType": "query",
+    "time": "2026-04-24T08:56:46.264Z"
+  },
+  {
+    "userId": "cde10782-379e-4a67-bac6-eb7461b17cf6",
+    "subject": "Web Technology",
+    "course": "Computer Engineering",
+    "action": "chat",
+    "topic": "General",
+    "queryType": "query",
+    "time": "2026-04-24T09:00:19.180Z"
+  },
+  {
+    "userId": "cde10782-379e-4a67-bac6-eb7461b17cf6",
+    "subject": "General",
+    "course": "Computer Engineering",
+    "action": "chat",
+    "topic": "Database Fundamentals",
+    "queryType": "query",
+    "time": "2026-04-24T09:04:37.175Z"
+  },
+  {
+    "userId": "cde10782-379e-4a67-bac6-eb7461b17cf6",
+    "subject": "General",
+    "course": "Computer Engineering",
+    "action": "chat",
+    "topic": "General",
+    "queryType": "query",
+    "time": "2026-04-24T09:05:11.287Z"
+  },
+  {
+    "userId": "cde10782-379e-4a67-bac6-eb7461b17cf6",
+    "subject": "DBMS",
+    "course": "Computer Engineering",
+    "action": "chat",
+    "topic": "Normalization",
+    "queryType": "query",
+    "time": "2026-04-24T09:10:06.495Z"
   }
 ]

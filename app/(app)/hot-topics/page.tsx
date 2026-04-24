@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Users, TrendingUp, Sparkles, BookOpen, RefreshCcw } from "lucide-react"
+import { Users, TrendingUp, Sparkles, BookOpen, RefreshCcw, Loader2 } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 interface HotTopicsData {
   trendingTopics: Array<{ name: string; count: number; rising: number; score: number }>;
@@ -12,8 +13,35 @@ interface HotTopicsData {
 }
 
 export default function HotTopicsPage() {
+  const router = useRouter();
   const [data, setData] = useState<HotTopicsData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isRedirecting, setIsRedirecting] = useState(false);
+
+  const handleTopicClick = async (topic: string) => {
+    const userId = localStorage.getItem("examwise_user_id");
+    if (!userId) {
+      router.push("/signup");
+      return;
+    }
+
+    setIsRedirecting(true);
+    try {
+      // 1. Create a new chat session
+      const res = await fetch(`/api/chat/${userId}/new`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title: `Deep Dive: ${topic}` })
+      });
+      const chat = await res.json();
+
+      // 2. Redirect to the new chat with the topic param
+      router.push(`/chat/${userId}/${chat.id}?topic=${encodeURIComponent(topic)}`);
+    } catch (err) {
+      console.error("Failed to start topic-specific chat:", err);
+      setIsRedirecting(false);
+    }
+  };
 
   const fetchHotTopics = async () => {
     setLoading(true);
@@ -128,14 +156,21 @@ export default function HotTopicsPage() {
           <CardContent className="space-y-4">
              {data?.trendingTopics && data.trendingTopics.length > 0 ? (
                data.trendingTopics.map((topic, i) => (
-                 <div key={i} className="flex justify-between items-center p-3 rounded-lg border border-border/50 bg-background/50">
+                 <div 
+                   key={i} 
+                   onClick={() => !isRedirecting && handleTopicClick(topic.name)}
+                   className={`flex justify-between items-center p-3 rounded-lg border border-border/50 bg-background/50 transition-all group ${isRedirecting ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-primary/50 hover:bg-primary/5'}`}
+                 >
                    <div>
-                     <p className="font-medium">{topic.name}</p>
+                     <p className="font-medium group-hover:text-primary transition-colors">{topic.name}</p>
                      <p className="text-xs text-muted-foreground">{topic.count} conversations started</p>
                    </div>
-                   <Badge variant={i === 0 ? "default" : "secondary"}>
-                     {i === 0 ? "🔥 Hot" : topic.rising > 0 ? "📈 Rising" : "Active"}
-                   </Badge>
+                   <div className="flex items-center gap-2">
+                     {isRedirecting && <Loader2 className="h-3 w-3 animate-spin text-primary" />}
+                     <Badge variant={i === 0 ? "default" : "secondary"}>
+                       {i === 0 ? "🔥 Hot" : topic.rising > 0 ? "📈 Rising" : "Active"}
+                     </Badge>
+                   </div>
                  </div>
                ))
              ) : (

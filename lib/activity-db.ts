@@ -112,3 +112,37 @@ export async function getActivities(): Promise<ActivityEvent[]> {
     return [];
   }
 }
+
+/**
+ * Identifies topics that are trending in the community but haven't been covered by the user.
+ * Now filters by subject to ensure relevance.
+ */
+export async function getBlindSpots(userId: string, subject?: string): Promise<string[]> {
+  const allActivities = await getActivities();
+  
+  // 1. Get community top topics (filtered by subject if provided)
+  const topicCounts: Record<string, number> = {};
+  allActivities.forEach(a => {
+    const isTargetSubject = !subject || a.subject.toLowerCase() === subject.toLowerCase();
+    if (isTargetSubject && a.topic && a.topic !== "General") {
+      topicCounts[a.topic] = (topicCounts[a.topic] || 0) + 1;
+    }
+  });
+
+  const trending = Object.entries(topicCounts)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 5)
+    .map(([topic]) => topic);
+
+  // 2. Get user's covered topics (in this subject)
+  const userCovered = new Set(
+    allActivities
+      .filter(a => a.userId === userId && (!subject || a.subject.toLowerCase() === subject.toLowerCase()))
+      .map(a => a.topic)
+  );
+
+  // 3. Find intersection (what's trending but user missed)
+  const blindSpots = trending.filter(t => !userCovered.has(t));
+  
+  return blindSpots;
+}

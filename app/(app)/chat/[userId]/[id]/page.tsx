@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
-import { Bot, Mic, Send, User, Paperclip, Loader2, CheckCircle2, X, FileText, Target, AlertCircle } from "lucide-react"
+import { Bot, Mic, Send, User, Paperclip, Loader2, CheckCircle2, X, FileText, Target, AlertCircle, Sparkles } from "lucide-react"
+import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { MarkdownRenderer } from "@/components/markdown-renderer"
@@ -34,8 +35,13 @@ export default function ChatPage({ params: paramsPromise }: { params: Promise<{ 
   const [uploadSuccess, setUploadSuccess] = useState(false)
   const [sessionDocs, setSessionDocs] = useState<{name: string, content: string}[]>([])
   const [stagedFiles, setStagedFiles] = useState<{name: string, content: string}[]>([])
+  const [blindSpots, setBlindSpots] = useState<string[]>([])
+  const [isBlindSpotDismissed, setIsBlindSpotDismissed] = useState(false)
+  const searchParams = useSearchParams()
+  const topicParam = searchParams.get("topic")
   const fileInputRef = useRef<HTMLInputElement>(null)
   const hasFetched = useRef(false) // Guard for double-fetching
+  const topicTriggered = useRef(false)
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("examwise_user_id");
@@ -54,9 +60,45 @@ export default function ChatPage({ params: paramsPromise }: { params: Promise<{ 
     // Fetch history from backend (guarded)
     if (!hasFetched.current) {
       fetchHistory()
+      
+      // FOR DEMO: Default to DBMS if no subject is found
+      let currentSubject = "DBMS";
+      
+      if (profile?.subject) {
+        currentSubject = profile.subject;
+      } else {
+        const saved = localStorage.getItem("examwise_profile")
+        if (saved) {
+          const p = JSON.parse(saved)
+          if (p.subject) currentSubject = p.subject;
+        }
+      }
+      
+      fetchBlindSpots(currentSubject)
       hasFetched.current = true
     }
   }, [router, userId, chatId, profile])
+
+  // Handle topic auto-trigger
+  useEffect(() => {
+    if (topicParam && messages.length === 1 && !topicTriggered.current && !isLoading) {
+      topicTriggered.current = true
+      handleSend(`I want to learn about "${topicParam}". Can you give me an overview and then we can dive into the specifics?`)
+    }
+  }, [topicParam, messages, isLoading])
+
+  const fetchBlindSpots = async (subject?: string) => {
+    try {
+      const url = `/api/activity/${userId}/blind-spots${subject ? `?subject=${encodeURIComponent(subject)}` : ''}`
+      const res = await fetch(url)
+      if (res.ok) {
+        const data = await res.json()
+        setBlindSpots(data.blindSpots || [])
+      }
+    } catch (e) {
+      console.error("Failed to fetch blind spots")
+    }
+  }
 
   const fetchHistory = async () => {
     try {
@@ -266,12 +308,20 @@ export default function ChatPage({ params: paramsPromise }: { params: Promise<{ 
               </div>
             )}
 
-            {/* Blind Spot Widget - Appears after EXACTLY 5 user messages */}
-            {messages.filter(m => m.role === "user").length >= 5 && (
+            {/* Blind Spot Widget - Appears after 3 user messages if specific topics are missed */}
+            {blindSpots.length > 0 && messages.filter(m => m.role === "user").length >= 3 && !isBlindSpotDismissed && (
               <div className="max-w-2xl mx-auto mt-12 animate-in fade-in slide-in-from-bottom-4 duration-1000">
                 <div className="relative overflow-hidden rounded-3xl bg-primary/5 border border-primary/20 backdrop-blur-md p-6 shadow-xl">
+                  {/* Close Button */}
+                  <button 
+                    onClick={() => setIsBlindSpotDismissed(true)}
+                    className="absolute top-4 right-4 p-1 hover:bg-primary/10 rounded-full transition-colors text-muted-foreground hover:text-primary z-10"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+
                   <div className="absolute top-0 right-0 p-4 opacity-10">
-                    <Target className="h-24 w-24 text-primary" />
+                    <Sparkles className="h-24 w-24 text-primary" />
                   </div>
                   
                   <div className="flex items-start gap-4">
@@ -281,22 +331,31 @@ export default function ChatPage({ params: paramsPromise }: { params: Promise<{ 
                     <div>
                       <h3 className="text-lg font-bold text-primary">Blind Spot Identified</h3>
                       <p className="text-sm text-muted-foreground mt-1">
-                        You have covered <span className="font-bold text-foreground">3/5</span> trending DBMS topics in this session.
+                        The community is currently focused on these topics which you haven&apos;t explored yet:
                       </p>
                       
                       <div className="mt-4 flex flex-wrap gap-2">
-                        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-[11px] font-semibold text-yellow-600 dark:text-yellow-400">
-                          <AlertCircle className="h-3.5 w-3.5" />
-                          MISSED: Unit 4 (Transactions)
-                        </div>
-                        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-[11px] font-semibold text-yellow-600 dark:text-yellow-400">
-                          <AlertCircle className="h-3.5 w-3.5" />
-                          MISSED: ACID Properties (Critical)
-                        </div>
+                        {blindSpots.map(topic => (
+                          <button 
+                            key={topic} 
+                            onClick={() => handleSend(`I'd like to focus on one of my blind spots: "${topic}". What should I know about it?`)}
+                            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-[11px] font-semibold text-yellow-600 dark:text-yellow-400 hover:bg-yellow-500/20 transition-colors"
+                          >
+                            <AlertCircle className="h-3.5 w-3.5" />
+                            MISSED: {topic}
+                          </button>
+                        ))}
                       </div>
 
-                      <button className="mt-6 text-sm font-bold text-primary hover:underline flex items-center gap-1 group">
-                        Let&apos;s cover these now
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          const topicsString = blindSpots.join(", ");
+                          handleSend(`I've missed these trending topics: ${topicsString}. Can you give me a structured summary covering all of them?`);
+                        }}
+                        className="mt-6 text-sm font-bold text-primary hover:underline flex items-center gap-1 group cursor-pointer relative z-20"
+                      >
+                        Let&apos;s cover ALL now
                         <span className="group-hover:translate-x-1 transition-transform">→</span>
                       </button>
                     </div>
