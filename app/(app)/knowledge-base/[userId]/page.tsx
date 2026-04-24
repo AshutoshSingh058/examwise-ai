@@ -27,6 +27,7 @@ export default function KnowledgeBasePage({ params: paramsPromise }: { params: P
   const [sources, setSources] = useState<Source[]>([])
   const [isTextOpen, setIsTextOpen] = useState(false)
   const [isPdfOpen, setIsPdfOpen] = useState(false)
+  const [isYoutubeOpen, setIsYoutubeOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
   // View modal state
@@ -35,6 +36,7 @@ export default function KnowledgeBasePage({ params: paramsPromise }: { params: P
   // Forms
   const [textForm, setTextForm] = useState({ title: "", subject: "", content: "" })
   const [pdfForm, setPdfForm] = useState({ title: "", subject: "", file: null as File | null })
+  const [youtubeForm, setYoutubeForm] = useState({ title: "", url: "", subject: "" })
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("examwise_user_id");
@@ -121,6 +123,47 @@ export default function KnowledgeBasePage({ params: paramsPromise }: { params: P
     setLoading(false)
   }
 
+  const handleAddYoutube = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    try {
+      // 1. Get Transcript
+      const transRes = await fetch("/api/youtube-transcript", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: youtubeForm.url })
+      })
+
+      if (!transRes.ok) {
+        const errorData = await transRes.json()
+        throw new Error(errorData.error || "Failed to fetch transcript")
+      }
+
+      const transData = await transRes.json()
+
+      // 2. Save to KB
+      await fetch("/api/kb", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: youtubeForm.title || transData.title,
+          subject: youtubeForm.subject,
+          content: transData.content,
+          type: "youtube",
+          status: "processed",
+          userId: userId
+        })
+      })
+
+      setIsYoutubeOpen(false)
+      setYoutubeForm({ title: "", url: "", subject: "" })
+      fetchSources()
+    } catch (error: any) {
+      alert(error.message)
+    }
+    setLoading(false)
+  }
+
   return (
     <div className="p-4 md:p-8 max-w-5xl mx-auto w-full space-y-8 fade-in">
       <div>
@@ -201,13 +244,40 @@ export default function KnowledgeBasePage({ params: paramsPromise }: { params: P
           </DialogContent>
         </Dialog>
 
-        <Card className="border-border/50 bg-card/50 shadow-sm opacity-50 cursor-not-allowed">
-          <CardHeader>
-            <Youtube className="h-8 w-8 text-muted-foreground mb-2" />
-            <CardTitle className="text-muted-foreground">Add YouTube URL</CardTitle>
-            <CardDescription>Coming in Phase 2</CardDescription>
-          </CardHeader>
-        </Card>
+        <Dialog open={isYoutubeOpen} onOpenChange={setIsYoutubeOpen}>
+          <DialogTrigger asChild>
+            <Card className="border-border/50 bg-card/50 shadow-sm hover:border-primary/50 transition-colors cursor-pointer">
+              <CardHeader>
+                <Youtube className="h-8 w-8 text-primary mb-2" />
+                <CardTitle>Add YouTube URL</CardTitle>
+                <CardDescription>Extract transcripts from educational videos automatically.</CardDescription>
+              </CardHeader>
+            </Card>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Add YouTube Video</DialogTitle>
+              <DialogDescription>Paste the YouTube URL and we&apos;ll extract the captions for your Knowledge Base.</DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleAddYoutube} className="space-y-4">
+              <div className="space-y-2">
+                <Label>Title</Label>
+                <Input required value={youtubeForm.title} onChange={e => setYoutubeForm({ ...youtubeForm, title: e.target.value })} placeholder="e.g. DBMS Lecture 1" />
+              </div>
+              <div className="space-y-2">
+                <Label>Video URL</Label>
+                <Input required value={youtubeForm.url} onChange={e => setYoutubeForm({ ...youtubeForm, url: e.target.value })} placeholder="https://www.youtube.com/watch?v=..." />
+              </div>
+              <div className="space-y-2">
+                <Label>Subject</Label>
+                <Input required value={youtubeForm.subject} onChange={e => setYoutubeForm({ ...youtubeForm, subject: e.target.value })} placeholder="e.g. DBMS" />
+              </div>
+              <DialogFooter>
+                <Button type="submit" disabled={loading}>{loading ? "Extracting..." : "Add Video Content"}</Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <div className="mt-12 space-y-4">
