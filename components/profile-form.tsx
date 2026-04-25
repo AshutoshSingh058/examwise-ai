@@ -7,13 +7,14 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-export function ProfileForm() {
+export function ProfileForm({ mode = "setup" }: { mode?: "setup" | "profile" }) {
   const router = useRouter()
   const [formData, setFormData] = useState({
     name: "",
     college: "",
     university: "",
     course: "",
+    subject: "",
     semester: "",
     examDate: ""
   })
@@ -31,7 +32,12 @@ export function ProfileForm() {
     const saved = localStorage.getItem("examwise_profile")
     if (saved) {
       try {
-        setFormData(JSON.parse(saved))
+        const parsed = JSON.parse(saved);
+        // Merge with defaults to prevent "controlled to uncontrolled" error if fields are missing
+        setFormData(prev => ({
+          ...prev,
+          ...parsed
+        }))
       } catch (e) {
         console.error("Could not parse saved profile form")
       }
@@ -63,8 +69,13 @@ export function ProfileForm() {
         throw new Error(data.error || "Failed to update profile")
       }
 
+
       localStorage.setItem("examwise_profile", JSON.stringify(formData))
-      router.push("/chat")
+      if (mode === "setup") {
+        router.push("/chat")
+      } else {
+        alert("Profile updated successfully!")
+      }
     } catch (err: any) {
       setError(err.message)
     } finally {
@@ -75,8 +86,12 @@ export function ProfileForm() {
   return (
     <Card className="w-full max-w-2xl border-border/50 bg-card/50 shadow-sm mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl">Exam Setup</CardTitle>
-        <CardDescription>Configure your specific curriculum details right now so the AI Tutor can adapt perfectly to your upcoming exams.</CardDescription>
+        <CardTitle className="text-2xl">{mode === "setup" ? "Exam Setup" : "Your Profile"}</CardTitle>
+        <CardDescription>
+          {mode === "setup" 
+            ? "Configure your specific curriculum details right now so the AI Tutor can adapt perfectly to your upcoming exams."
+            : "Update your study focus and academic details."}
+        </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
         <CardContent className="grid gap-6">
@@ -96,9 +111,15 @@ export function ProfileForm() {
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="course">Course / Branch <span className="text-red-500">*</span></Label>
-            <Input id="course" name="course" required value={formData.course} onChange={handleChange} placeholder="e.g. B.Tech Computer Science" className="bg-background/50" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="course">Course / Branch <span className="text-red-500">*</span></Label>
+              <Input id="course" name="course" required value={formData.course} onChange={handleChange} placeholder="e.g. B.Tech CS" className="bg-background/50" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="subject">Current Focus Subject <span className="text-red-500">*</span></Label>
+              <Input id="subject" name="subject" required value={formData.subject} onChange={handleChange} placeholder="e.g. DBMS" className="bg-background/50 border-primary/20" />
+            </div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -114,7 +135,9 @@ export function ProfileForm() {
 
         </CardContent>
         <CardFooter className="flex justify-end pt-4">
-          <Button type="submit" size="lg" className="rounded-full px-8">Continue to ExamWise</Button>
+          <Button type="submit" size="lg" className="rounded-full px-8" disabled={isLoading}>
+            {isLoading ? "Saving..." : mode === "setup" ? "Continue to ExamWise" : "Update Profile"}
+          </Button>
         </CardFooter>
       </form>
     </Card>

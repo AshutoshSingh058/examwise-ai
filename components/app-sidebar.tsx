@@ -23,6 +23,9 @@ export function AppSidebar() {
   const [userId, setUserId] = useState<string | null>(null)
   const [chats, setChats] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [searchResults, setSearchResults] = useState<any[]>([])
+  const [isSearching, setIsSearching] = useState(false)
   const hasFetched = useRef(false)
 
   useEffect(() => {
@@ -78,6 +81,25 @@ export function AppSidebar() {
     }
   }
 
+  const handleSearch = async (query: string) => {
+    setSearchQuery(query)
+    if (!query.trim() || !userId) {
+      setSearchResults([])
+      return
+    }
+
+    setIsSearching(true)
+    try {
+      const res = await fetch(`/api/chat/${userId}/search?q=${encodeURIComponent(query)}`)
+      const data = await res.json()
+      setSearchResults(Array.isArray(data) ? data : [])
+    } catch (e) {
+      console.error("Search failed")
+    } finally {
+      setIsSearching(false)
+    }
+  }
+
   return (
     <Sidebar collapsible="none" className="border-r border-border/50">
       <SidebarContent>
@@ -85,12 +107,49 @@ export function AppSidebar() {
         <SidebarGroup className="pt-4">
           <SidebarGroupContent>
             <SidebarMenu className="gap-2">
-              <SidebarMenuItem>
-                <SidebarMenuButton>
-                  <Search className="h-4 w-4" />
-                  <span>Search Chats</span>
-                </SidebarMenuButton>
+              <SidebarMenuItem className="px-2 pb-1">
+                <div className="relative group/search">
+                  <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground group-focus-within/search:text-green-600/70 transition-colors" />
+                  <input
+                    type="text"
+                    placeholder="Search chats..."
+                    value={searchQuery}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    className="w-full bg-secondary/50 border border-border/50 rounded-md py-1.5 pl-8 pr-3 text-xs focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all"
+                  />
+                  
+                  {searchQuery && (
+                    <div className="absolute top-full left-0 right-0 mt-1 bg-popover border border-border shadow-lg rounded-md overflow-hidden z-50 fade-in">
+                      {isSearching ? (
+                        <div className="p-3 text-[10px] text-center text-muted-foreground flex items-center justify-center gap-2">
+                          <Loader2 className="h-3 w-3 animate-spin" /> Searching...
+                        </div>
+                      ) : searchResults.length > 0 ? (
+                        <div className="py-1">
+                          {searchResults.map((result) => (
+                            <button
+                              key={result.id}
+                              onClick={() => {
+                                router.push(`/chat/${userId}/${result.id}`)
+                                setSearchQuery("")
+                              }}
+                              className="w-full px-3 py-2 text-left text-[11px] hover:bg-accent transition-colors border-b border-border/20 last:border-0"
+                            >
+                              <div className="font-medium truncate">{result.title}</div>
+                              <div className="text-[9px] text-muted-foreground">
+                                {new Date(result.updatedAt).toLocaleDateString()}
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="p-3 text-[10px] text-center text-muted-foreground">No chats found</div>
+                      )}
+                    </div>
+                  )}
+                </div>
               </SidebarMenuItem>
+
               <SidebarMenuItem>
                 <SidebarMenuButton 
                   onClick={handleNewChat} 
@@ -173,20 +232,12 @@ export function AppSidebar() {
       </SidebarContent>
 
       {/* BOTTOM */}
-      <SidebarFooter>
+      <SidebarFooter className="pt-0 pb-2">
         <SidebarMenu className="gap-0.5">
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <Link href="#">
-                <Settings className="h-4 w-4" />
-                <span>Settings</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <Link href="#">
-                <UserCircle className="h-4 w-4" />
+            <SidebarMenuButton asChild isActive={pathname?.startsWith("/profile")} className="hover:text-green-600 transition-colors group/lib">
+              <Link href={userId ? `/profile/${userId}` : "/signup"}>
+                <UserCircle className="h-4 w-4 opacity-70 group-hover/lib:text-green-600" />
                 <span>Profile</span>
               </Link>
             </SidebarMenuButton>

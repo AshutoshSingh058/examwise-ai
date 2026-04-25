@@ -82,6 +82,14 @@
       ],
       "createdAt": "2026-04-23T12:54:36.711Z",
       "updatedAt": "2026-04-23T13:05:29.088Z"
+    },
+    {
+      "id": "fbf91e20-4d99-47ec-a412-b0b3eb644876",
+      "userId": "aacd2763-0f89-4811-9d09-1127f7acf89d",
+      "title": "New Session",
+      "messages": [],
+      "createdAt": "2026-04-24T18:15:14.642Z",
+      "updatedAt": "2026-04-24T18:15:14.642Z"
     }
   ]
 }

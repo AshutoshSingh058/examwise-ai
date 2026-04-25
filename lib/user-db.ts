@@ -26,6 +26,7 @@ export interface User {
     college: string;
     university: string;
     course: string;
+    subject: string;
     semester: string;
     examDate?: string;
   };
