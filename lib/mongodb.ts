@@ -1,6 +1,5 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
-const uri = process.env.MONGODB_URI || "";
 const options = {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -9,18 +8,23 @@ const options = {
   },
 };
 
-if (!uri && process.env.NODE_ENV !== 'production') {
-  console.warn('⚠️ MONGODB_URI is missing. Database features will fail.');
-}
+let client: MongoClient | null = null;
+let clientPromise: Promise<MongoClient> | null = null;
 
+export async function getMongoClient(): Promise<MongoClient> {
+  const uri = process.env.MONGODB_URI;
+  
+  if (!uri) {
+    throw new Error('Please add your Mongo URI to environment variables');
+  }
 
-let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
+  if (clientPromise) {
+    return clientPromise;
+  }
 
-if (!uri) {
-  clientPromise = Promise.reject(new Error('MONGODB_URI is not defined'));
-} else {
   if (process.env.NODE_ENV === 'development') {
+    // In development mode, use a global variable so that the value
+    // is preserved across module reloads caused by HMR (Hot Module Replacement).
     let globalWithMongo = global as typeof globalThis & {
       _mongoClientPromise?: Promise<MongoClient>;
     };
@@ -31,21 +35,19 @@ if (!uri) {
     }
     clientPromise = globalWithMongo._mongoClientPromise;
   } else {
+    // In production mode, it's best to not use a global variable.
     client = new MongoClient(uri, options);
     clientPromise = client.connect();
   }
+
+  return clientPromise;
 }
-
-
-// Export a module-scoped MongoClient promise. By doing this in a
-// separate module, the client can be shared across functions.
-export default clientPromise;
 
 export async function getDb(dbName: string = 'examwise') {
-  if (!process.env.MONGODB_URI) {
-    throw new Error('MONGODB_URI is not defined in environment variables');
-  }
-  const client = await clientPromise;
-  return client.db(dbName);
+  const mongoClient = await getMongoClient();
+  return mongoClient.db(dbName);
 }
+
+// Exporting getMongoClient as the primary way to get the promise lazily
+export { clientPromise };
 
