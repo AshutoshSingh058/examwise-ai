@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import { getSources } from "@/lib/kb-db";
+
+export const dynamic = 'force-dynamic';
+
 import { ChatService } from "@/lib/ai/chat-service";
 import { isAIConfigured } from "@/lib/ai/gemini";
 import { logActivity, detectTopic, detectSubject } from "@/lib/activity-db";

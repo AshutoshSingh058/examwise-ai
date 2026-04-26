@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
 import { findUserByEmail } from '@/lib/user-db';
+
+export const dynamic = 'force-dynamic';
+
 import { claimLegacyData } from '@/lib/kb-db';
 import { createChatSession } from '@/lib/chat-db';
 

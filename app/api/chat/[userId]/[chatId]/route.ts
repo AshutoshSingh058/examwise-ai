@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getChatSession, addMessageToSession } from '@/lib/chat-db';
 
+export const dynamic = 'force-dynamic';
+
+
 export async function GET(
   req: Request,
   { params }: { params: Promise<{ userId: string, chatId: string }> }

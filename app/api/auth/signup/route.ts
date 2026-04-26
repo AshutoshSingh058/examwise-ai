@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
 import { findUserByEmail, createUser } from '@/lib/user-db';
+
+export const dynamic = 'force-dynamic';
+
 import { claimLegacyData } from '@/lib/kb-db';
 
 export async function POST(req: Request) {
