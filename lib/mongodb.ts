@@ -1,10 +1,6 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
-if (!process.env.MONGODB_URI) {
-  throw new Error('Please add your Mongo URI to .env.local');
-}
-
-const uri = process.env.MONGODB_URI;
+const uri = process.env.MONGODB_URI || "";
 const options = {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -12,6 +8,11 @@ const options = {
     deprecationErrors: true,
   },
 };
+
+if (!uri && process.env.NODE_ENV !== 'production') {
+  console.warn('⚠️ MONGODB_URI is missing. Database features will fail.');
+}
+
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
@@ -39,6 +40,10 @@ if (process.env.NODE_ENV === 'development') {
 export default clientPromise;
 
 export async function getDb(dbName: string = 'examwise') {
+  if (!process.env.MONGODB_URI) {
+    throw new Error('MONGODB_URI is not defined in environment variables');
+  }
   const client = await clientPromise;
   return client.db(dbName);
 }
+

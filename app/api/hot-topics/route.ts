@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server"
 import { getActivities, ActivityEvent } from "@/lib/activity-db"
 
+export const dynamic = 'force-dynamic';
+
+
+
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
