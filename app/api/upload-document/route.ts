@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     })
 
     // Log the activity
-    logActivity({
+    await logActivity({
         userId: formData.get("userId") as string,
         subject: detectSubject(file.name + " " + (subject || "")),
         course: "BTech", 
@@ -39,6 +39,7 @@ export async function POST(req: Request) {
         topic: detectTopic(file.name + " " + extractedText.slice(0, 500)),
         queryType: "document"
     }).catch(e => console.error("Activity Logging Error:", e));
+
 
     return NextResponse.json(newSource)
   } catch (error: any) {

@@ -11,7 +11,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
     }
 
-    const user = findUserByEmail(email);
+    const user = await findUserByEmail(email);
     
     if (!user || user.password !== password) {
       return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
@@ -26,10 +26,11 @@ export async function POST(req: Request) {
 
     if (user.isProfileComplete) {
       // Create a brand new chat session as requested for "Start Preparing" flow
-      const session = createChatSession(user.id, 'New Session');
+      const session = await createChatSession(user.id, 'New Session');
       newChatId = session.id;
       redirectTo = `/chat/${user.id}/${session.id}`;
     }
+
 
     // Return user info for state management
     const { password: _, ...userWithoutPassword } = user;

@@ -1,20 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import { getDb } from './mongodb';
 import { v4 as uuidv4 } from 'uuid';
-
-const DATA_DIR = path.join(process.cwd(), 'data');
-const USERS_DIR = path.join(DATA_DIR, 'users');
-const REGISTRY_PATH = path.join(DATA_DIR, 'registry.json');
-
-// Ensure directories exist
-if (!fs.existsSync(USERS_DIR)) {
-  fs.mkdirSync(USERS_DIR, { recursive: true });
-}
-
-// Ensure registry exists
-if (!fs.existsSync(REGISTRY_PATH)) {
-  fs.writeFileSync(REGISTRY_PATH, JSON.stringify({ emails: {} }, null, 2));
-}
 
 export interface User {
   id: string;
@@ -33,52 +18,31 @@ export interface User {
   createdAt: string;
 }
 
-/**
- * Registry Helper: Maps email to userId
- */
-function getRegistry(): Record<string, string> {
+const COLLECTION = 'users';
+
+export async function findUserById(id: string): Promise<User | undefined> {
   try {
-    const data = fs.readFileSync(REGISTRY_PATH, 'utf8');
-    return JSON.parse(data).emails;
-  } catch (e) {
-    return {};
-  }
-}
-
-function saveRegistry(emails: Record<string, string>) {
-  fs.writeFileSync(REGISTRY_PATH, JSON.stringify({ emails }, null, 2));
-}
-
-/**
- * User Helper: Path to a specific user's profile
- */
-function getUserProfilePath(userId: string): string {
-  const userDir = path.join(USERS_DIR, userId);
-  if (!fs.existsSync(userDir)) {
-    fs.mkdirSync(userDir, { recursive: true });
-  }
-  return path.join(userDir, 'profile.json');
-}
-
-export function findUserById(id: string): User | undefined {
-  try {
-    const profilePath = getUserProfilePath(id);
-    if (!fs.existsSync(profilePath)) return undefined;
-    const data = fs.readFileSync(profilePath, 'utf8');
-    return JSON.parse(data);
+    const db = await getDb();
+    const user = await db.collection<User>(COLLECTION).findOne({ id });
+    return user || undefined;
   } catch (error) {
+    console.error('[User-DB] findUserById error:', error);
     return undefined;
   }
 }
 
-export function findUserByEmail(email: string): User | undefined {
-  const registry = getRegistry();
-  const userId = registry[email.toLowerCase()];
-  if (!userId) return undefined;
-  return findUserById(userId);
+export async function findUserByEmail(email: string): Promise<User | undefined> {
+  try {
+    const db = await getDb();
+    const user = await db.collection<User>(COLLECTION).findOne({ email: email.toLowerCase() });
+    return user || undefined;
+  } catch (error) {
+    console.error('[User-DB] findUserByEmail error:', error);
+    return undefined;
+  }
 }
 
-export function createUser(email: string, password?: string): User {
+export async function createUser(email: string, password?: string): Promise<User> {
   const userId = uuidv4();
   const newUser: User = {
     id: userId,
@@ -88,30 +52,25 @@ export function createUser(email: string, password?: string): User {
     createdAt: new Date().toISOString()
   };
   
-  // 1. Update Registry
-  const registry = getRegistry();
-  registry[email.toLowerCase()] = userId;
-  saveRegistry(registry);
-  
-  // 2. Save Profile
-  fs.writeFileSync(getUserProfilePath(userId), JSON.stringify(newUser, null, 2));
+  const db = await getDb();
+  await db.collection<User>(COLLECTION).insertOne(newUser);
   
   return newUser;
 }
 
-export function updateUserProfile(id: string, profile: User['profile']): User | null {
-  const user = findUserById(id);
-  if (!user) return null;
+export async function updateUserProfile(id: string, profile: User['profile']): Promise<User | null> {
+  const db = await getDb();
+  const result = await db.collection<User>(COLLECTION).findOneAndUpdate(
+    { id },
+    { 
+      $set: { 
+        profile,
+        isProfileComplete: true 
+      } 
+    },
+    { returnDocument: 'after' }
+  );
   
-  const updatedUser: User = {
-    ...user,
-    profile,
-    isProfileComplete: true
-  };
-  
-  fs.writeFileSync(getUserProfilePath(id), JSON.stringify(updatedUser, null, 2));
-  return updatedUser;
+  return result as User | null;
 }
 
-// Keep for migration script
-export { REGISTRY_PATH, USERS_DIR, getUserProfilePath };

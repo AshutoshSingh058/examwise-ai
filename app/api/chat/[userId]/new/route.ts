@@ -8,7 +8,8 @@ export async function POST(
   try {
     const { userId } = await params;
     const { title } = await req.json().catch(() => ({}));
-    const newSession = createChatSession(userId, title || 'New Chat');
+    const newSession = await createChatSession(userId, title || 'New Chat');
+
     return NextResponse.json(newSession);
   } catch (error) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

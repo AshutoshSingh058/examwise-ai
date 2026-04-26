@@ -14,7 +14,8 @@ export async function GET(
       return NextResponse.json([]);
     }
 
-    const sessions = getChatSessions(userId);
+    const sessions = await getChatSessions(userId);
+
     
     // Filter sessions based on title or message content
     const results = sessions.filter(session => {

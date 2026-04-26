@@ -7,7 +7,7 @@ export async function GET(
 ) {
   try {
     const { userId, chatId } = await params;
-    const session = getChatSession(userId, chatId);
+    const session = await getChatSession(userId, chatId);
     
     if (!session) {
       return NextResponse.json({ error: 'Chat not found' }, { status: 404 });
@@ -27,7 +27,8 @@ export async function POST(
     const { userId, chatId } = await params;
     const { role, content } = await req.json();
     
-    const updatedSession = addMessageToSession(userId, chatId, { role, content });
+    const updatedSession = await addMessageToSession(userId, chatId, { role, content });
+
     
     if (!updatedSession) {
       return NextResponse.json({ error: 'Chat not found' }, { status: 404 });

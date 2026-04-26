@@ -7,8 +7,9 @@ export async function GET(
 ) {
   try {
     const { userId } = await params;
-    const sessions = getChatSessions(userId);
+    const sessions = await getChatSessions(userId);
     return NextResponse.json(sessions);
+
   } catch (error) {
     console.error('Error fetching chat list:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

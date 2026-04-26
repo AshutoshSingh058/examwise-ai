@@ -10,15 +10,16 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
     }
 
-    const existingUser = findUserByEmail(email);
+    const existingUser = await findUserByEmail(email);
     if (existingUser) {
       return NextResponse.json({ error: 'User already exists' }, { status: 400 });
     }
 
-    const newUser = createUser(email, password);
+    const newUser = await createUser(email, password);
     
     // Claim any legacy data for the newly created user
     await claimLegacyData(newUser.id);
+
     
     // For this prototype, we'll return the user object (excluding password if possible)
     const { password: _, ...userWithoutPassword } = newUser;

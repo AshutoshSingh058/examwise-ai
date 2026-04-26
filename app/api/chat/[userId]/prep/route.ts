@@ -26,13 +26,14 @@ export async function POST(
 
     // 3. Create a New Chat Session for this Prep
     const title = `⚡ Prep: ${subject}`;
-    const session = createChatSession(userId, title);
+    const session = await createChatSession(userId, title);
     
     // Add the AI response as the first message
-    addMessageToSession(userId, session.id, {
+    await addMessageToSession(userId, session.id, {
       role: 'assistant',
       content: prepContent
     });
+
 
     return NextResponse.json({ chatId: session.id });
   } catch (error: any) {

@@ -1,9 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import { getDb } from './mongodb';
 import { v4 as uuidv4 } from 'uuid';
-
-const DATA_DIR = path.join(process.cwd(), 'data');
-const USERS_DIR = path.join(DATA_DIR, 'users');
 
 export interface ChatMessage {
   role: 'user' | 'assistant';
@@ -20,41 +16,23 @@ export interface ChatSession {
   updatedAt: string;
 }
 
-function getUserChatPath(userId: string): string {
-  const userDir = path.join(USERS_DIR, userId);
-  if (!fs.existsSync(userDir)) {
-    fs.mkdirSync(userDir, { recursive: true });
-  }
-  return path.join(userDir, 'chats.json');
-}
+const COLLECTION = 'chats';
 
-export function getChatSessions(userId: string): ChatSession[] {
+export async function getChatSessions(userId: string): Promise<ChatSession[]> {
   try {
-    const chatPath = getUserChatPath(userId);
-    if (!fs.existsSync(chatPath)) return [];
-    
-    const data = fs.readFileSync(chatPath, 'utf8');
-    const sessions: ChatSession[] = JSON.parse(data).sessions;
-    return sessions.sort((a, b) => 
-      new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
-    );
+    const db = await getDb();
+    const sessions = await db.collection<ChatSession>(COLLECTION)
+      .find({ userId })
+      .sort({ updatedAt: -1 })
+      .toArray();
+    return sessions;
   } catch (error) {
     console.error(`[Chat-DB] Error reading sessions for user ${userId}:`, error);
     return [];
   }
 }
 
-export function saveChatSessions(userId: string, sessions: ChatSession[]) {
-  try {
-    const chatPath = getUserChatPath(userId);
-    fs.writeFileSync(chatPath, JSON.stringify({ sessions }, null, 2));
-  } catch (error) {
-    console.error('Error saving chat sessions:', error);
-  }
-}
-
-export function createChatSession(userId: string, title: string = 'New Chat'): ChatSession {
-  const sessions = getChatSessions(userId);
+export async function createChatSession(userId: string, title: string = 'New Chat'): Promise<ChatSession> {
   const newSession: ChatSession = {
     id: uuidv4(),
     userId,
@@ -64,22 +42,27 @@ export function createChatSession(userId: string, title: string = 'New Chat'): C
     updatedAt: new Date().toISOString()
   };
   
-  sessions.push(newSession);
-  saveChatSessions(userId, sessions);
+  const db = await getDb();
+  await db.collection<ChatSession>(COLLECTION).insertOne(newSession);
   return newSession;
 }
 
-export function getChatSession(userId: string, id: string): ChatSession | undefined {
-  const sessions = getChatSessions(userId);
-  return sessions.find(s => s.id === id);
+export async function getChatSession(userId: string, id: string): Promise<ChatSession | undefined> {
+  try {
+    const db = await getDb();
+    const session = await db.collection<ChatSession>(COLLECTION).findOne({ id, userId });
+    return session || undefined;
+  } catch (error) {
+    return undefined;
+  }
 }
 
-export function addMessageToSession(userId: string, id: string, message: Omit<ChatMessage, 'timestamp'>): ChatSession | null {
-  const sessions = getChatSessions(userId);
-  const index = sessions.findIndex(s => s.id === id);
+export async function addMessageToSession(userId: string, id: string, message: Omit<ChatMessage, 'timestamp'>): Promise<ChatSession | null> {
+  const db = await getDb();
+  const session = await getChatSession(userId, id);
   
-  if (index === -1) {
-    console.warn(`[Chat-DB] Session ${id} not found for user ${userId}. Available:`, sessions.map(s => s.id));
+  if (!session) {
+    console.warn(`[Chat-DB] Session ${id} not found for user ${userId}.`);
     return null;
   }
   
@@ -88,23 +71,34 @@ export function addMessageToSession(userId: string, id: string, message: Omit<Ch
     timestamp: new Date().toISOString()
   };
   
-  sessions[index].messages.push(newMessage);
-  sessions[index].updatedAt = new Date().toISOString();
+  const messages = [...session.messages, newMessage];
+  const updatedAt = new Date().toISOString();
   
   // Update title if it's the first user message AND title is still "New Chat"
-  const currentTitle = sessions[index].title;
-  const isDefaultTitle = currentTitle === 'New Chat';
+  let title = session.title;
+  const isDefaultTitle = title === 'New Chat';
   
-  if (isDefaultTitle && sessions[index].messages.filter(m => m.role === 'user').length === 1 && message.role === 'user') {
-    sessions[index].title = message.content.slice(0, 30) + (message.content.length > 30 ? '...' : '');
+  if (isDefaultTitle && messages.filter(m => m.role === 'user').length === 1 && message.role === 'user') {
+    title = message.content.slice(0, 30) + (message.content.length > 30 ? '...' : '');
   }
   
-  saveChatSessions(userId, sessions);
-  return sessions[index];
+  const result = await db.collection<ChatSession>(COLLECTION).findOneAndUpdate(
+    { id, userId },
+    { 
+      $set: { 
+        messages,
+        title,
+        updatedAt
+      } 
+    },
+    { returnDocument: 'after' }
+  );
+  
+  return result as ChatSession | null;
 }
 
-export function deleteChatSession(userId: string, id: string): void {
-  let sessions = getChatSessions(userId);
-  sessions = sessions.filter(s => s.id !== id);
-  saveChatSessions(userId, sessions);
+export async function deleteChatSession(userId: string, id: string): Promise<void> {
+  const db = await getDb();
+  await db.collection<ChatSession>(COLLECTION).deleteOne({ id, userId });
 }
+

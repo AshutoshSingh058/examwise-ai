@@ -1,7 +1,6 @@
 import { getChatSessions } from '../chat-db';
 import { getSources } from '../kb-db';
-import fs from 'fs';
-import path from 'path';
+import { findUserById } from '../user-db';
 
 export class PrepService {
   /**
@@ -9,17 +8,17 @@ export class PrepService {
    */
   static async gatherContext(userId: string) {
     // 1. Get Subject from profile
-    const profilePath = path.join(process.cwd(), 'data', 'users', userId, 'profile.json');
     let subject = "DBMS"; // Default fallback
+    const user = await findUserById(userId);
     
-    if (fs.existsSync(profilePath)) {
-      const profile = JSON.parse(fs.readFileSync(profilePath, 'utf8'));
-      if (profile.subject) subject = profile.subject;
+    if (user && user.profile?.subject) {
+      subject = user.profile.subject;
     }
 
     // 2. Get Latest 3 Chats for this subject (last 7 days)
     const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-    const allSessions = getChatSessions(userId);
+    const allSessions = await getChatSessions(userId);
+
     
     const relevantSessions = allSessions
       .filter(s => {

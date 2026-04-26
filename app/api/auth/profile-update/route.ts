@@ -9,7 +9,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
     }
 
-    const updatedUser = updateUserProfile(userId, profileData);
+    const updatedUser = await updateUserProfile(userId, profileData);
+
     
     if (!updatedUser) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });

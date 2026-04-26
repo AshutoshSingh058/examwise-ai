@@ -72,7 +72,7 @@ export default function SignupPage() {
               Start your strategic journey to academic success
             </CardDescription>
           </CardHeader>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} method="POST">
             <CardContent className="grid gap-4">
               {error && (
                 <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive border border-destructive/20 animate-in fade-in zoom-in-95">

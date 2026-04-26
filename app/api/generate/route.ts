@@ -45,7 +45,7 @@ export async function POST(req: Request) {
     const text = response.text();
 
     // 5. Log Activity (Hot Topics Signal)
-    logActivity({
+    await logActivity({
       userId,
       sessionId: chatId,
       subject: detectSubject(prompt) || profileContext?.subject || "General",
@@ -54,6 +54,7 @@ export async function POST(req: Request) {
       topic: detectTopic(prompt),
       queryType: userMessageCount === 1 ? "strategy" : "query"
     }).catch(e => console.error("Activity Logging Error:", e));
+
 
     return NextResponse.json({ text });
   } catch (error: any) {
