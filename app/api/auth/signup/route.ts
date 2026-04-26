@@ -31,8 +31,13 @@ export async function POST(req: Request) {
       user: userWithoutPassword,
       redirectTo: '/setup' // New users always go to setup first as per flow
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Signup error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ 
+      error: 'Internal server error', 
+      details: error.message,
+      stack: error.stack
+    }, { status: 500 });
   }
 }
+
