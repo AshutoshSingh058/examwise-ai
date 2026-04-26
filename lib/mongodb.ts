@@ -12,11 +12,14 @@ let client: MongoClient | null = null;
 let clientPromise: Promise<MongoClient> | null = null;
 
 export async function getMongoClient(): Promise<MongoClient> {
-  const uri = process.env.MONGODB_URI;
+  let uri = process.env.MONGODB_URI;
   
   if (!uri) {
     throw new Error('Please add your Mongo URI to environment variables');
   }
+
+  // Sanitize URI (remove accidental quotes or whitespace from environment variables)
+  uri = uri.trim().replace(/^["']|["']$/g, '');
 
   if (clientPromise) {
     return clientPromise;
@@ -50,4 +53,3 @@ export async function getDb(dbName: string = 'examwise') {
 
 // Exporting getMongoClient as the primary way to get the promise lazily
 export { clientPromise };
-
